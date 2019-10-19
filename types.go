@@ -37,6 +37,12 @@ func (c ChangeLogEntries) Swap(i, j int) {
 	c[i], c[j] = c[j], c[i]
 }
 
+// PackageChangeLog used for the formatting API
+type PackageChangeLog struct {
+	Name    string           `yaml:"name"`
+	Entries ChangeLogEntries `yaml:"entries"`
+}
+
 // ChangeLog a single changelog entry
 type ChangeLog struct {
 	ChangeLogOverridables `yaml:",inline"`
