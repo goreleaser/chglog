@@ -11,7 +11,8 @@ import (
 	"gopkg.in/src-d/go-git.v4/plumbing/storer"
 )
 
-func InitChangelog(gitRepo *git.Repository, useConventionalCommits bool) (cle ChangeLogEntries, err error) {
+// InitChangelog create a new ChangeLogEntries from a git repo
+func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, useConventionalCommits bool) (cle ChangeLogEntries, err error) {
 	var (
 		tagRefs    storer.ReferenceIter
 		version    *semver.Version
@@ -24,7 +25,7 @@ func InitChangelog(gitRepo *git.Repository, useConventionalCommits bool) (cle Ch
 	tagRefs, err = gitRepo.Tags()
 	defer tagRefs.Close()
 	if err = tagRefs.ForEach(func(t *plumbing.Reference) error {
-		commits := make([]*object.Commit, 0)
+		var commits []*object.Commit
 		tagName := t.Name().Short()
 
 		if version, err = semver.NewVersion(tagName); err != nil || version == nil {
@@ -35,11 +36,13 @@ func InitChangelog(gitRepo *git.Repository, useConventionalCommits bool) (cle Ch
 		}
 
 		commitObject, _ := gitRepo.CommitObject(start)
-		owner := fmt.Sprintf("%s <%s>", commitObject.Committer.Name, commitObject.Committer.Email)
+		if owner == "" {
+			owner = fmt.Sprintf("%s <%s>", commitObject.Committer.Name, commitObject.Committer.Email)
+		}
 		if commits, err = CommitsBetween(gitRepo, end, start); err != nil {
 			return err
 		}
-		changelog := CreateEntry(commitObject.Committer.When, version, owner, commits, useConventionalCommits)
+		changelog := CreateEntry(commitObject.Committer.When, version, owner, notes, deb, commits, useConventionalCommits)
 		cle = append(cle, changelog)
 		end = start
 

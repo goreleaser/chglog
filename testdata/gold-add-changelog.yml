@@ -1,0 +1,60 @@
+- semver: 1.0.0-b1+git.123
+  date: 2019-10-18T18:17:57.934767812-07:00
+  packager: Dj Gilcrease
+  notes:
+    header: |2
+
+      This is a test
+      ======
+
+      header entry
+  changes:
+    - commit: 433581c28b23426dee2c498da28defa9f5bd4f63
+      note: 'chore: add a new file'
+      conventional_commit:
+        category: chore
+        scope: ""
+        breaking: false
+        description: add a new file
+        body: ""
+- semver: 0.0.1
+  date: 2019-10-18T16:05:33-07:00
+  packager: Dj Gilcrease <d.gilcrease@f5.com>
+  changes:
+    - commit: 2c499787328348f09ae1e8f03757c6483b9a938a
+      note: |-
+        oops i forgot to use Conventional Commits style message
+
+        This should NOT break anything even if I am asking to build the changelog using Conventional Commits style message
+      conventional_commit:
+        category: ""
+        scope: ""
+        breaking: false
+        description: oops i forgot to use Conventional Commits style message
+        body: This should NOT break anything even if I am asking to build the changelog
+          using Conventional Commits style message
+    - commit: 3ec1e9a60d07cc060cee727c97ffc8aac5713943
+      note: |-
+        feat: added file two feature
+
+        BREAKING CHANGE: this is a backwards incompatible change
+      conventional_commit:
+        category: feat
+        scope: ""
+        breaking: true
+        description: added file two feature
+        body: 'BREAKING CHANGE: this is a backwards incompatible change'
+    - commit: 2cc00abc77d401a541d18c26e5c7fbef1effd3ed
+      note: |-
+        feat: added the fileone feature
+
+        * This is a test repo
+        * so ya!
+      conventional_commit:
+        category: feat
+        scope: ""
+        breaking: false
+        description: added the fileone feature
+        body: |-
+          * This is a test repo
+          * so ya!

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-var expectedFormatRegex = regexp.MustCompile(`(?s)^(?P<category>\S+?)?(?P<scope>\(\S+\))?(?P<breaking>!?)?: (?P<description>[^\n\r]+)?([\n\r]{2}(?P<body>.*))?`)
+var expectedFormatRegex = regexp.MustCompile(`(?s)^(?P<category>\S+?)?(?P<scope>\(\S+\))?(?P<breaking>!?)?: (?P<description>[^\n\r]+)?([\n\r]{2}(?P<body>.*))?`) // nolint:gochecknoglobals
 
 // ParseConventionalCommit takes a commits message and parses it into usable blocks
 func ParseConventionalCommit(message string) (commit *ConventionalCommit) {
@@ -16,7 +16,7 @@ func ParseConventionalCommit(message string) (commit *ConventionalCommit) {
 		parts = append(parts, "")
 		return &ConventionalCommit{
 			Description: parts[0],
-			Body: strings.Trim(parts[1], "\n"),
+			Body:        processMsg(parts[1]),
 		}
 	}
 

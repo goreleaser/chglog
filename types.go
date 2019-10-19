@@ -1,3 +1,4 @@
+// Package chglog contains the public API for working with a changlog.yml file
 package chglog
 
 import (
@@ -60,8 +61,8 @@ type ChangelogDeb struct {
 
 // ChangeLogNotes contains a potential header/footer string for output formatting
 type ChangeLogNotes struct {
-	Header string `yaml:"header,omitempty"`
-	Footer string `yaml:"footer,omitempty"`
+	Header *string `yaml:"header,omitempty"`
+	Footer *string `yaml:"footer,omitempty"`
 }
 
 // ChangeLogChanges list of individual changes

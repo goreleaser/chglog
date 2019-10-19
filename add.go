@@ -1,31 +1,42 @@
 package chglog
 
 import (
+	"fmt"
 	"regexp"
 	"sort"
 	"strings"
 	"time"
 
-	"github.com/Masterminds/semver/v3"
 	"gopkg.in/src-d/go-git.v4"
 	"gopkg.in/src-d/go-git.v4/plumbing"
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 )
 
-func AddEntry(gitRepo *git.Repository, version *semver.Version, owner string, current ChangeLogEntries, useConventionalCommits bool) (cle ChangeLogEntries, err error) {
+// AddEntry add a ChangeLog entry to an existing ChangeLogEntries that
+func AddEntry(
+	gitRepo *git.Repository,
+	version fmt.Stringer,
+	owner string,
+	notes *ChangeLogNotes,
+	deb *ChangelogDeb,
+	current ChangeLogEntries,
+	useConventionalCommits bool) (cle ChangeLogEntries, err error) {
 	var (
 		ref      *plumbing.Reference
 		from, to plumbing.Hash
 		commits  []*object.Commit
 	)
 
-	sort.Sort(current)
-	ref, err = gitRepo.Head()
+	if ref, err = gitRepo.Head(); err != nil {
+		return nil, err
+	}
 	from = ref.Hash()
 
 	to = plumbing.ZeroHash
-	if current.Len() > 0 {
-		to, err = GitHashFotTag(gitRepo, current[current.Len()-1].Semver)
+	if len(current) > 0 {
+		if to, err = GitHashFotTag(gitRepo, current[0].Semver); err != nil {
+			return nil, err
+		}
 	}
 
 	cle = append(cle, current...)
@@ -33,10 +44,14 @@ func AddEntry(gitRepo *git.Repository, version *semver.Version, owner string, cu
 		return nil, err
 	}
 
-	cle = append(cle, CreateEntry(time.Now(), version, owner, commits, useConventionalCommits))
+	if len(commits) == 0 {
+		return nil, fmt.Errorf("no commits found for this entry")
+	}
+
+	cle = append(cle, CreateEntry(time.Now(), version, owner, notes, deb, commits, useConventionalCommits))
 	sort.Sort(sort.Reverse(cle))
 
-	return
+	return cle, nil
 }
 
 func processMsg(msg string) string {
@@ -46,17 +61,20 @@ func processMsg(msg string) string {
 	return msg
 }
 
-func CreateEntry(date time.Time, version *semver.Version, owner string, commits []*object.Commit, useConventionalCommits bool) (changelog *ChangeLog) {
+// CreateEntry create a ChangeLog object
+func CreateEntry(date time.Time, version fmt.Stringer, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, commits []*object.Commit, useConventionalCommits bool) (changelog *ChangeLog) {
 	var cc *ConventionalCommit
 	changelog = &ChangeLog{
 		Semver:   version.String(),
 		Date:     date,
 		Packager: owner,
+		Notes:    notes,
 	}
-	if commits == nil || len(commits) == 0 {
+	if len(commits) == 0 {
 		return
 	}
 	changelog.Changes = make(ChangeLogChanges, len(commits))
+	changelog.Deb = deb
 
 	for idx, c := range commits {
 		msg := processMsg(c.Message)
@@ -69,5 +87,6 @@ func CreateEntry(date time.Time, version *semver.Version, owner string, commits 
 			ConventionalCommit: cc,
 		}
 	}
-	return
+
+	return changelog
 }
