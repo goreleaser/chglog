@@ -2,6 +2,10 @@ SOURCE_FILES?=./...
 TEST_PATTERN?=.
 TEST_OPTIONS?=
 TEST_TIMEOUT?=5m
+SEMVER?=0.0.0-$(shell whoami)
+CI_COMMIT_SHORT_SHA?=$(shell git log --pretty=format:'%h' -n 1)
+
+
 
 # Install all the build and lint dependencies
 setup:
@@ -31,7 +35,9 @@ ci: build lint test
 .PHONY: ci
 
 build:
-	go build -o nfpm ./cmd/chglog/main.go
+	go build -tags 'release netgo osusergo'  \
+		-ldflags '$(linker_flags) -s -w -extldflags "-fno-PIC -static" -X main.pkgName=chglog -X main.version=$(SEMVER) -X main.commit=$(CI_COMMIT_SHORT_SHA)' \
+		 -o chglog ./cmd/chglog/...
 .PHONY: build
 
 deps:

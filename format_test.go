@@ -2,14 +2,16 @@ package chglog
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
 	"gopkg.in/src-d/go-git.v4"
 )
 
 // nolint: gochecknoglobals
-var formats = map[string]string{"rpm": rpmTpl, "deb": debTpl, "repo": repoTpl}
+var formats = map[string]string{"rpm": rpmTpl, "deb": debTpl, "release": releaseTpl, "repo": repoTpl}
 
 func TestFormatChangelog(t *testing.T) {
 	var (
@@ -44,6 +46,10 @@ func accept(t *testing.T, tmplData string, pkg PackageChangeLog) {
 		t.Error(err)
 		return
 	} else {
-		fmt.Printf("\n\n===============\n%s\n===============\n", testdata)
+		golddata, _ := ioutil.ReadFile(fmt.Sprintf("./testdata/%s", pkg.Name))
+
+		if diff := cmp.Diff(string(golddata), testdata); diff != "" {
+			t.Errorf("FormatChangelog mismatch (+got -want):\n%s", diff)
+		}
 	}
 }

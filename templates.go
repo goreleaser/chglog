@@ -10,8 +10,9 @@ const (
 	rpmTpl = `
 {{- range .Entries }}{{$version := semver .Semver}}
 * {{ .Date | date "Mon Jan 2 2006" }} {{ .Packager }} - {{ $version.Major }}.{{ $version.Minor }}.{{ $version.Patch }}{{if $version.Prerelease}}-{{ $version.Prerelease }}{{end}}
-{{- range .Changes }}
-- {{ .Note }} 
+{{- range .Changes }}{{$note := splitList "\n" .Note}}
+  - {{ first $note }}{{ range $i,$n := (rest $note) }}{{if ne $n "\n"}}  {{$n}}{{end}}
+  {{end}}
 {{- end }}
 {{- end }}
 `
@@ -19,20 +20,53 @@ const (
 {{- range .Entries }}
 {{ $name }} ({{ .Semver }}) {{if .Deb}}{{default "" (.Deb.Distributions | join " ")}}; urgency={{default "low" .Deb.Urgency}}{{end}}
 {{range .Changes }}{{$note := splitList "\n" .Note}}
-  * {{ first $note }}
-  {{ range $i,$n := (rest $note) }}- {{$n}}
+  * {{ first $note }}{{ range $i,$n := (rest $note) }}{{if ne $n "\n"}}- {{$n}}{{end}}
   {{end}}
 {{end}}
 
 -- {{ .Packager }} {{ .Date | date "Mon, 2 Jan 2006 03:04:05 -0700" }}
 {{- end }}
 `
+	releaseTpl = `
+Changelog
+=========
+{{- with (first .Entries)}}
+{{range .Changes }}{{$note := splitList "\n" .Note}}
+{{substr 0 8 .Commit}} {{ first $note }}{{end}}
+{{- end}}
+`
 	repoTpl = `
-repo: {{ .Name }}
+{{- range .Entries }}
+{{ .Semver }}
+=============
+{{ .Date | date "2006-01-02" }}
+{{range .Changes }}{{$note := splitList "\n" .Note}}
+* {{ first $note }} ({{substr 0 8 .Commit}}){{end}}
+{{- end}}
 `
 )
 
 // LoadTemplateData load a template from string with all of the sprig.TxtFuncMap loaded
 func LoadTemplateData(data string) (*template.Template, error) {
 	return template.New("base").Funcs(sprig.TxtFuncMap()).Parse(data)
+}
+
+// DebTemplate load default debian template
+func DebTemplate() (*template.Template, error) {
+	return LoadTemplateData(debTpl)
+}
+
+// RPMTemplate load default RPM template
+func RPMTemplate() (*template.Template, error) {
+	return LoadTemplateData(rpmTpl)
+}
+
+// ReleaseTemplate load default release template
+func ReleaseTemplate() (*template.Template, error) {
+	return LoadTemplateData(releaseTpl)
+}
+
+// RepoTemplate load default repo template
+func RepoTemplate() (*template.Template, error) {
+	return LoadTemplateData(repoTpl)
 }

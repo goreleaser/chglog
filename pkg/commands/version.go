@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
+func setupVersionCmd(config *viper.Viper) (cmd *cobra.Command) {
 	cmd = &cobra.Command{
 		Use:   "version",
 		Short: "display version info",
