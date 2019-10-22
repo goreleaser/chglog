@@ -38,13 +38,13 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"output",
 		"o",
 		"changelog.yml",
-		"file to save the new changelog to")
+		"file to save the updated changelog to")
 	cmd.Flags().StringVarP(
 		&input,
 		"input",
 		"i",
 		"changelog.yml",
-		"file to save the new changelog to")
+		"starting changelog.yml file")
 	cmd.Flags().StringVarP(
 		&version,
 		"version",

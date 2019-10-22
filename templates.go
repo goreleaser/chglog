@@ -14,7 +14,7 @@ const (
   - {{ first $note }}{{ range $i,$n := (rest $note) }}{{if ne $n "\n"}}  {{$n}}{{end}}
   {{end}}
 {{- end }}
-{{- end }}
+{{ end }}
 `
 	debTpl = `{{$name := .Name}}
 {{- range .Entries }}
@@ -25,7 +25,7 @@ const (
 {{end}}
 
 -- {{ .Packager }} {{ .Date | date "Mon, 2 Jan 2006 03:04:05 -0700" }}
-{{- end }}
+{{ end }}
 `
 	releaseTpl = `
 Changelog
@@ -33,7 +33,7 @@ Changelog
 {{- with (first .Entries)}}
 {{range .Changes }}{{$note := splitList "\n" .Note}}
 {{substr 0 8 .Commit}} {{ first $note }}{{end}}
-{{- end}}
+{{ end}}
 `
 	repoTpl = `
 {{- range .Entries }}
@@ -42,7 +42,7 @@ Changelog
 {{ .Date | date "2006-01-02" }}
 {{range .Changes }}{{$note := splitList "\n" .Note}}
 * {{ first $note }} ({{substr 0 8 .Commit}}){{end}}
-{{- end}}
+{{ end}}
 `
 )
 

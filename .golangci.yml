@@ -17,7 +17,7 @@ linters-settings:
   govet:
     check-shadowing: true
   errcheck:
-    ignore: ^Close.*,fmt:.*,github.com/pkg/errors:^Wrap.*,os:^Setenv$
+    ignore: ^Close.*,fmt:.*,github.com/pkg/errors:^Wrap.*,os:^Setenv$,github.com/spf13/viper:.*
   lll:
     line-length: 200
   golint:
