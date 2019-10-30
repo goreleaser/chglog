@@ -7,6 +7,12 @@
       oops i forgot to use Conventional Commits style message
 
       This should NOT break anything even if I am asking to build the changelog using Conventional Commits style message
+    author:
+      name: Dj Gilcrease
+      email: d.gilcrease@f5.com
+    committer:
+      name: Dj Gilcrease
+      email: d.gilcrease@f5.com
     conventional_commit:
       category: ""
       scope: ""
@@ -19,6 +25,12 @@
       feat: added file two feature
 
       BREAKING CHANGE: this is a backwards incompatible change
+    author:
+      name: Dj Gilcrease
+      email: d.gilcrease@f5.com
+    committer:
+      name: Dj Gilcrease
+      email: d.gilcrease@f5.com
     conventional_commit:
       category: feat
       scope: ""
@@ -31,6 +43,12 @@
 
       * This is a test repo
       * so ya!
+    author:
+      name: Dj Gilcrease
+      email: d.gilcrease@f5.com
+    committer:
+      name: Dj Gilcrease
+      email: d.gilcrease@f5.com
     conventional_commit:
       category: feat
       scope: ""
