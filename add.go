@@ -82,8 +82,16 @@ func CreateEntry(date time.Time, version fmt.Stringer, owner string, notes *Chan
 			cc = ParseConventionalCommit(msg)
 		}
 		changelog.Changes[idx] = &ChangeLogChange{
-			Commit:             c.Hash.String(),
-			Note:               msg,
+			Commit: c.Hash.String(),
+			Note:   msg,
+			Committer: &User{
+				Name:  c.Committer.Name,
+				Email: c.Committer.Email,
+			},
+			Author: &User{
+				Name:  c.Author.Name,
+				Email: c.Author.Email,
+			},
 			ConventionalCommit: cc,
 		}
 	}

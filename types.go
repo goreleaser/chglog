@@ -76,8 +76,13 @@ type ChangeLogChanges []*ChangeLogChange
 
 // ChangeLogChange an individual change
 type ChangeLogChange struct {
-	Commit             string              `yaml:"commit"`
-	Note               string              `yaml:"note"`
+	Commit string `yaml:"commit"`
+	Note   string `yaml:"note"`
+	// Author is the original author of the commit.
+	Author *User `yaml:"author,omitempty"`
+	// Committer is the one performing the commit, might be different from
+	// Author.
+	Committer          *User               `yaml:"committer,omitempty"`
 	ConventionalCommit *ConventionalCommit `yaml:"conventional_commit,omitempty"`
 }
 
@@ -88,4 +93,12 @@ type ConventionalCommit struct {
 	Breaking    bool   `yaml:"breaking"`
 	Description string `yaml:"description"`
 	Body        string `yaml:"body"`
+}
+
+// User is used to identify who created a commit or tag.
+type User struct {
+	// Name represents a person name. It is an arbitrary string.
+	Name string `yaml:"name"`
+	// Email is an email, but it cannot be assumed to be well-formed.
+	Email string `yaml:"email"`
 }
