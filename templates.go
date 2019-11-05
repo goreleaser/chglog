@@ -16,15 +16,17 @@ const (
 {{- end }}
 {{ end }}
 `
-	debTpl = `{{$name := .Name}}
+	debTpl = `{{- $name := .Name}}
 {{- range .Entries }}
-{{ $name }} ({{ .Semver }}) {{if .Deb}}{{default "" (.Deb.Distributions | join " ")}}; urgency={{default "low" .Deb.Urgency}}{{end}}
-{{range .Changes }}{{$note := splitList "\n" .Note}}
-  * {{ first $note }}{{ range $i,$n := (rest $note) }}{{if ne $n "\n"}}- {{$n}}{{end}}
-  {{end}}
-{{end}}
+{{ $name }} ({{ .Semver }}){{if .Deb}} {{default "" (.Deb.Distributions | join " ")}}; urgency={{default "low" .Deb.Urgency}}{{end}}
+  {{- range .Changes }}{{$note := splitList "\n" .Note}}
+  * {{ first $note }}
+   {{- range $i,$n := (rest $note) }}
+   {{- if ne (trim $n) ""}}
+   - {{$n}}{{end}}
+{{- end}}{{end}}
 
--- {{ .Packager }} {{ .Date | date "Mon, 2 Jan 2006 03:04:05 -0700" }}
+ -- {{ .Packager }}  {{ .Date | date "Mon, 02 Jan 2006 03:04:05 -0700" }}
 {{ end }}
 `
 	releaseTpl = `
