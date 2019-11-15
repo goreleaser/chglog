@@ -16,7 +16,7 @@ func TestAddEntry(t *testing.T) {
 		gitRepo *git.Repository
 		testCLE ChangeLogEntries
 	)
-	if gitRepo, err = GitRepo("./testdata/add-repo"); err != nil {
+	if gitRepo, err = GitRepo("./testdata/add-repo", false); err != nil {
 		log.Fatal(err)
 	}
 

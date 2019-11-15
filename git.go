@@ -11,8 +11,10 @@ import (
 var errReachedToCommit = errors.New("reached to commit")
 
 // GitRepo open a GitRepo to use to build the changelog from
-func GitRepo(gitPath string) (*git.Repository, error) {
-	return git.PlainOpen(gitPath)
+func GitRepo(gitPath string, detectDotGit bool) (*git.Repository, error) {
+	return git.PlainOpenWithOptions(gitPath, &git.PlainOpenOptions{
+		DetectDotGit: detectDotGit,
+	})
 }
 
 // GitHashFotTag return the git sha for a particular tag

@@ -103,7 +103,7 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 			return err
 		}
 
-		if gitRepo, err = chglog.GitRepo(repoPath); err != nil {
+		if gitRepo, err = chglog.GitRepo(repoPath, true); err != nil {
 			return err
 		}
 
