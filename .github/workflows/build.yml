@@ -43,7 +43,7 @@ jobs:
         uses: codecov/codecov-action@v1.0.10
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.txt
+          file: ./coverage.out
       -
         name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
