@@ -1,3 +1,4 @@
 #!/bin/bash
+# TODO: re-enable this later
 # FILES=$(git diff --staged --diff-filter=AM --no-renames --name-only)
 # make fmt lint test && git add $FILES
