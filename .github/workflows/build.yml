@@ -45,17 +45,11 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.txt
       -
-        name: Check
-        run: |
-          ./goreleaser check
-      -
-        name: GoReleaser
-        if: success()
+        name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v2
+        if: success() && startsWith(github.ref, 'refs/tags/')
+        with:
+          version: latest
+          args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          if [[ $GITHUB_REF == refs/tags/v* ]]; then
-            ./goreleaser --parallelism 2
-          else
-            ./goreleaser --snapshot --parallelism 2
-          fi
