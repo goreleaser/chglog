@@ -21,7 +21,7 @@ require (
 	github.com/spf13/viper v1.5.0
 	github.com/stretchr/testify v1.4.0 // indirect
 	gopkg.in/src-d/go-git.v4 v4.13.1
-	gopkg.in/yaml.v2 v2.2.5
+	gopkg.in/yaml.v2 v2.3.0
 )
 
 replace gopkg.in/src-d/go-git.v4 => github.com/djgilcrease/go-git v0.0.0-20191115023449-e52680bfbcf1
