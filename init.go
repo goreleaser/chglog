@@ -11,7 +11,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/storer"
 )
 
-// InitChangelog create a new ChangeLogEntries from a git repo
+// InitChangelog create a new ChangeLogEntries from a git repo.
 func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, useConventionalCommits bool) (cle ChangeLogEntries, err error) {
 	var (
 		tagRefs    storer.ReferenceIter

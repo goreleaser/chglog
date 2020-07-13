@@ -10,18 +10,18 @@ import (
 
 var errReachedToCommit = errors.New("reached to commit")
 
-// GitRepo open a GitRepo to use to build the changelog from
+// GitRepo open a GitRepo to use to build the changelog from.
 func GitRepo(gitPath string, detectDotGit bool) (*git.Repository, error) {
 	return git.PlainOpenWithOptions(gitPath, &git.PlainOpenOptions{
 		DetectDotGit: detectDotGit,
 	})
 }
 
-// GitHashFotTag return the git sha for a particular tag
+// GitHashFotTag return the git sha for a particular tag.
 func GitHashFotTag(gitRepo *git.Repository, tagName string) (hash plumbing.Hash, err error) {
 	var ref *plumbing.Reference
 	ref, err = gitRepo.Tag(tagName)
-	if err == git.ErrTagNotFound {
+	if errors.Is(err, git.ErrTagNotFound) {
 		ref, err = gitRepo.Tag("v" + tagName)
 	}
 	if err != nil {
@@ -30,7 +30,7 @@ func GitHashFotTag(gitRepo *git.Repository, tagName string) (hash plumbing.Hash,
 	return ref.Hash(), nil
 }
 
-// CommitsBetween return the list of commits between to commits
+// CommitsBetween return the list of commits between two commits.
 func CommitsBetween(gitRepo *git.Repository, start, end plumbing.Hash) (commits []*object.Commit, err error) {
 	var (
 		commitIter object.CommitIter
@@ -50,7 +50,7 @@ func CommitsBetween(gitRepo *git.Repository, start, end plumbing.Hash) (commits 
 		return nil
 	})
 
-	if err != nil && err != errReachedToCommit {
+	if err != nil && !errors.Is(err, errReachedToCommit) {
 		return nil, err
 	}
 

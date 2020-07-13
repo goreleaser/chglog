@@ -1,6 +1,7 @@
 package chglog
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"sort"
@@ -12,7 +13,10 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/object"
 )
 
-// AddEntry add a ChangeLog entry to an existing ChangeLogEntries that
+// ErrNoCommits happens when no commits are found for a given entry.
+var ErrNoCommits = errors.New("no commits found for this entry")
+
+// AddEntry add a ChangeLog entry to an existing ChangeLogEntries that.
 func AddEntry(
 	gitRepo *git.Repository,
 	version fmt.Stringer,
@@ -45,7 +49,7 @@ func AddEntry(
 	}
 
 	if len(commits) == 0 {
-		return nil, fmt.Errorf("no commits found for this entry")
+		return nil, ErrNoCommits
 	}
 
 	cle = append(cle, CreateEntry(time.Now(), version, owner, notes, deb, commits, useConventionalCommits))
@@ -61,7 +65,7 @@ func processMsg(msg string) string {
 	return msg
 }
 
-// CreateEntry create a ChangeLog object
+// CreateEntry create a ChangeLog object.
 func CreateEntry(date time.Time, version fmt.Stringer, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, commits []*object.Commit, useConventionalCommits bool) (changelog *ChangeLog) {
 	var cc *ConventionalCommit
 	changelog = &ChangeLog{

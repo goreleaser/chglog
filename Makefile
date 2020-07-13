@@ -28,7 +28,7 @@ fmt:
 .PHONY: fmt
 
 lint: check
-	./bin/golangci-lint run --exclude-use-default=false --fix -v
+	./bin/golangci-lint run --exclude-use-default=false --fix
 .PHONY: check
 
 ci: build lint test

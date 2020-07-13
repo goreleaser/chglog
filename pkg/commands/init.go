@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,6 +12,9 @@ import (
 
 	"github.com/goreleaser/chglog"
 )
+
+// ErrNoTags happens when a repository has no tags.
+var ErrNoTags = errors.New("no versioned releases found, check the output of `git tag`")
 
 func setupInitCmd(config *viper.Viper) (cmd *cobra.Command) {
 	var output string
@@ -57,7 +61,7 @@ func setupInitCmd(config *viper.Viper) (cmd *cobra.Command) {
 		}
 
 		if len(entries) == 0 {
-			return fmt.Errorf("%s does not have any versioned releases. `git tag` should return semver formated tags", repoPath)
+			return fmt.Errorf("%w: %s", ErrNoTags, repoPath)
 		}
 
 		return entries.Save(output)

@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"strings"
@@ -11,7 +12,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-// nolint: gocognit, funlen
+// ErrTemplateFlags occurs when the user tries to use both --template and --template-file flags.
+var ErrTemplateFlags = errors.New("--template and --template-file are mutually exclusive")
+
+// nolint: funlen, gocritic
 func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 	var (
 		input,
@@ -69,7 +73,7 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 			fmtPackage = new(chglog.PackageChangeLog)
 		)
 		if templateName != "" && templateFile != "" {
-			return fmt.Errorf("--template and --template-file are mutually exclusive")
+			return ErrTemplateFlags
 		}
 
 		switch strings.ToLower(templateName) {
@@ -82,7 +86,8 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 		case "repo":
 			tpl, err = chglog.RepoTemplate()
 		default:
-			if data, err = ioutil.ReadFile(templateFile); err != nil { // nolint: gosec
+			// nolint: gosec, gocritic
+			if data, err = ioutil.ReadFile(templateFile); err != nil {
 				return err
 			}
 			tpl, err = chglog.LoadTemplateData(string(data))
@@ -106,6 +111,7 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 			return
 		}
 
+		// nolint: gosec, gocritic
 		return ioutil.WriteFile(output, []byte(ret), 0644)
 	}
 

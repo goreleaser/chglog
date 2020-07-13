@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// AllCommands returns all commands supported
+// AllCommands returns all commands supported.
 func AllCommands(config *viper.Viper) (cmds []*cobra.Command) {
 	cmds = append(cmds,
 		setupVersionCmd(config),

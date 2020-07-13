@@ -9,7 +9,7 @@ import (
 const (
 	rpmTpl = `
 {{- range .Entries }}{{$version := semver .Semver}}
-* {{ .Date | date "Mon Jan 2 2006" }} {{ .Packager }} - {{ $version.Major }}.{{ $version.Minor }}.{{ $version.Patch }}{{if $version.Prerelease}}-{{ $version.Prerelease }}{{end}}
+* {{ date_in_zone "Mon Jan 2 2006" .Date "UTC" }} {{ .Packager }} - {{ $version.Major }}.{{ $version.Minor }}.{{ $version.Patch }}{{if $version.Prerelease}}-{{ $version.Prerelease }}{{end}}
 {{- range .Changes }}{{$note := splitList "\n" .Note}}
   - {{ first $note }}{{ range $i,$n := (rest $note) }}{{if ne $n "\n"}}  {{$n}}{{end}}
   {{end}}
@@ -26,7 +26,7 @@ const (
    - {{$n}}{{end}}
 {{- end}}{{end}}
 
- -- {{ .Packager }}  {{ .Date | date "Mon, 02 Jan 2006 03:04:05 -0700" }}
+ -- {{ .Packager }}  {{ date_in_zone "Mon, 02 Jan 2006 03:04:05 -0700" .Date "UTC" }}
 {{ end }}
 `
 	releaseTpl = `
@@ -41,34 +41,34 @@ Changelog
 {{- range .Entries }}
 {{ .Semver }}
 =============
-{{ .Date | date "2006-01-02" }}
+{{ date_in_zone "2006-01-02" .Date "UTC" }}
 {{range .Changes }}{{$note := splitList "\n" .Note}}
 * {{ first $note }} ({{substr 0 8 .Commit}}){{end}}
 {{ end}}
 `
 )
 
-// LoadTemplateData load a template from string with all of the sprig.TxtFuncMap loaded
+// LoadTemplateData load a template from string with all of the sprig.TxtFuncMap loaded.
 func LoadTemplateData(data string) (*template.Template, error) {
 	return template.New("base").Funcs(sprig.TxtFuncMap()).Parse(data)
 }
 
-// DebTemplate load default debian template
+// DebTemplate load default debian template.
 func DebTemplate() (*template.Template, error) {
 	return LoadTemplateData(debTpl)
 }
 
-// RPMTemplate load default RPM template
+// RPMTemplate load default RPM template.
 func RPMTemplate() (*template.Template, error) {
 	return LoadTemplateData(rpmTpl)
 }
 
-// ReleaseTemplate load default release template
+// ReleaseTemplate load default release template.
 func ReleaseTemplate() (*template.Template, error) {
 	return LoadTemplateData(releaseTpl)
 }
 
-// RepoTemplate load default repo template
+// RepoTemplate load default repo template.
 func RepoTemplate() (*template.Template, error) {
 	return LoadTemplateData(repoTpl)
 }
