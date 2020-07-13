@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/Masterminds/semver"
+	"github.com/go-git/go-git/v5"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"gopkg.in/src-d/go-git.v4"
 
 	"github.com/goreleaser/chglog"
 )

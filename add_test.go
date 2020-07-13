@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/Masterminds/semver/v3"
+	"github.com/go-git/go-git/v5"
 	"github.com/google/go-cmp/cmp"
-	"gopkg.in/src-d/go-git.v4"
 )
 
 func TestAddEntry(t *testing.T) {

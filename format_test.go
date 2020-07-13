@@ -6,8 +6,8 @@ import (
 	"log"
 	"testing"
 
+	"github.com/go-git/go-git/v5"
 	"github.com/google/go-cmp/cmp"
-	"gopkg.in/src-d/go-git.v4"
 )
 
 // nolint: gochecknoglobals
