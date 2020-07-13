@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// nolint: gochecknoglobals
+// nolint: gochecknoglobals, gocritic
 var (
 	pkgName = "chglog"
 	version = "v0.0.0"
@@ -58,6 +58,7 @@ func main() {
 	cmdRoot.AddCommand(cmds...)
 
 	if err := cmdRoot.Execute(); err != nil {
+		// nolint: gomnd, gocritic
 		os.Exit(127)
 	}
 }

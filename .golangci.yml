@@ -3,6 +3,8 @@ linters:
   disable:
     - godox
     - wsl
+    - testpackage
+    - gofumpt
 linters-settings:
   maligned:
     # print struct with more effective memory layout or not, false by default

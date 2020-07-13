@@ -15,7 +15,7 @@ import (
 	"github.com/goreleaser/chglog"
 )
 
-// nolint: gocognit, funlen
+// nolint: gocognit, funlen, gocritic
 func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 	var (
 		input,
@@ -108,14 +108,16 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 		}
 
 		if headerFile != "" {
-			if data, err = ioutil.ReadFile(headerFile); err != nil { // nolint: gosec
+			// nolint: gosec, gocritic
+			if data, err = ioutil.ReadFile(headerFile); err != nil {
 				return err
 			}
 			header = string(data)
 		}
 
 		if footerFile != "" {
-			if data, err = ioutil.ReadFile(footerFile); err != nil { // nolint: gosec
+			// nolint: gosec, gocritic
+			if data, err = ioutil.ReadFile(footerFile); err != nil {
 				return err
 			}
 			footer = string(data)
@@ -141,7 +143,7 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 		}
 
 		if len(entries) == 0 {
-			return fmt.Errorf("%s does not have any versioned releases. `git tag` should return semver formated tags", repoPath)
+			return fmt.Errorf("%w: %s", ErrNoTags, repoPath)
 		}
 
 		return entries.Save(output)

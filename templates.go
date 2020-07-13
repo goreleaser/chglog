@@ -48,27 +48,27 @@ Changelog
 `
 )
 
-// LoadTemplateData load a template from string with all of the sprig.TxtFuncMap loaded
+// LoadTemplateData load a template from string with all of the sprig.TxtFuncMap loaded.
 func LoadTemplateData(data string) (*template.Template, error) {
 	return template.New("base").Funcs(sprig.TxtFuncMap()).Parse(data)
 }
 
-// DebTemplate load default debian template
+// DebTemplate load default debian template.
 func DebTemplate() (*template.Template, error) {
 	return LoadTemplateData(debTpl)
 }
 
-// RPMTemplate load default RPM template
+// RPMTemplate load default RPM template.
 func RPMTemplate() (*template.Template, error) {
 	return LoadTemplateData(rpmTpl)
 }
 
-// ReleaseTemplate load default release template
+// ReleaseTemplate load default release template.
 func ReleaseTemplate() (*template.Template, error) {
 	return LoadTemplateData(releaseTpl)
 }
 
-// RepoTemplate load default repo template
+// RepoTemplate load default repo template.
 func RepoTemplate() (*template.Template, error) {
 	return LoadTemplateData(repoTpl)
 }

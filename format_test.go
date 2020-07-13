@@ -10,7 +10,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-// nolint: gochecknoglobals
+// nolint: gochecknoglobals,gocritic
 var formats = map[string]string{"rpm": rpmTpl, "deb": debTpl, "release": releaseTpl, "repo": repoTpl}
 
 func TestFormatChangelog(t *testing.T) {

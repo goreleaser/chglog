@@ -7,7 +7,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 )
 
-// ChangeLogEntries list of ChangeLog entries
+// ChangeLogEntries list of ChangeLog entries.
 type ChangeLogEntries []*ChangeLog
 
 // Len returns the length of a collection. The number of Version instances
@@ -37,13 +37,13 @@ func (c ChangeLogEntries) Swap(i, j int) {
 	c[i], c[j] = c[j], c[i]
 }
 
-// PackageChangeLog used for the formatting API
+// PackageChangeLog used for the formatting API.
 type PackageChangeLog struct {
 	Name    string           `yaml:"name"`
 	Entries ChangeLogEntries `yaml:"entries"`
 }
 
-// ChangeLog a single changelog entry
+// ChangeLog a single changelog entry.
 type ChangeLog struct {
 	ChangeLogOverridables `yaml:",inline"`
 	Semver                string           `yaml:"semver"`
@@ -53,7 +53,7 @@ type ChangeLog struct {
 	Changes               ChangeLogChanges `yaml:"changes,omitempty"`
 }
 
-// ChangeLogOverridables contains potential format specific fields
+// ChangeLogOverridables contains potential format specific fields.
 type ChangeLogOverridables struct {
 	Deb *ChangelogDeb `yaml:"deb,omitempty"`
 }
@@ -65,16 +65,16 @@ type ChangelogDeb struct {
 	Distributions []string `yaml:"distributions"`
 }
 
-// ChangeLogNotes contains a potential header/footer string for output formatting
+// ChangeLogNotes contains a potential header/footer string for output formatting.
 type ChangeLogNotes struct {
 	Header *string `yaml:"header,omitempty"`
 	Footer *string `yaml:"footer,omitempty"`
 }
 
-// ChangeLogChanges list of individual changes
+// ChangeLogChanges list of individual changes.
 type ChangeLogChanges []*ChangeLogChange
 
-// ChangeLogChange an individual change
+// ChangeLogChange an individual change.
 type ChangeLogChange struct {
 	Commit string `yaml:"commit"`
 	Note   string `yaml:"note"`
@@ -86,7 +86,7 @@ type ChangeLogChange struct {
 	ConventionalCommit *ConventionalCommit `yaml:"conventional_commit,omitempty"`
 }
 
-// ConventionalCommit a parsed conventional commit message
+// ConventionalCommit a parsed conventional commit message.
 type ConventionalCommit struct {
 	Category    string `yaml:"category"`
 	Scope       string `yaml:"scope"`
