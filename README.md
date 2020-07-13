@@ -3,23 +3,23 @@
   <h3 align="center">chglog</h3>
   <p align="center">chglog is a changelog management library and tool</p>
   <p align="center">
-    <a href="https://github.com/goreleaser/chglog/releases/latest"><img alt="Release" src="https://img.shields.io/github/release/goreleaser/chglog.svg?style=flat-square"></a>
-    <a href="/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <a href="https://travis-ci.org/goreleaser/chglog"><img alt="Travis" src="https://img.shields.io/travis/goreleaser/chglog/master.svg?style=flat-square"></a>
-    <a href="https://codecov.io/gh/goreleaser/chglog"><img alt="Codecov branch" src="https://img.shields.io/codecov/c/github/goreleaser/chglog/master.svg?style=flat-square"></a>
-    <a href="https://goreportcard.com/report/github.com/goreleaser/chglog"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/goreleaser/chglog?style=flat-square"></a>
-    <a href="http://godoc.org/github.com/goreleaser/chglog"><img alt="Go Doc" src="https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square"></a>
-    <a href="https://github.com/goreleaser"><img alt="Powered By: GoReleaser" src="https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square"></a>
+    <a href="https://github.com/goreleaser/chglog/releases/latest"><img alt="Release" src="https://img.shields.io/github/release/goreleaser/chglog.svg?style=for-the-badge"></a>
+    <a href="/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge"></a>
+    <a href="https://github.com/goreleaser/goreleaser/actions?workflow=build"><img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/goreleaser/goreleaser/build?style=for-the-badge"></a>
+    <a href="https://codecov.io/gh/goreleaser/chglog"><img alt="Codecov branch" src="https://img.shields.io/codecov/c/github/goreleaser/chglog/master.svg?style=for-the-badge"></a>
+    <a href="https://goreportcard.com/report/github.com/goreleaser/chglog"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/goreleaser/chglog?style=for-the-badge"></a>
+    <a href="http://godoc.org/github.com/goreleaser/chglog"><img alt="Go Doc" src="https://img.shields.io/badge/godoc-reference-blue.svg?style=for-the-badge"></a>
+    <a href="https://github.com/goreleaser"><img alt="Powered By: GoReleaser" src="https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=for-the-badge"></a>
   </p>
 </p>
 
 ## Why
 
-While there are other tool out there that will create a changelog output as part of their workflow none of the ones 
+While there are other tool out there that will create a changelog output as part of their workflow none of the ones
 I could find did so in a way that allowed formatting the output via multiple templates.
 
-The need to multiple output formats was being driven by the desire to add changelog support to 
-https://github.com/goreleaser/nfpm and the deb and rpm changelog formats not being the same. 
+The need to multiple output formats was being driven by the desire to add changelog support to
+https://github.com/goreleaser/nfpm and the deb and rpm changelog formats not being the same.
 
 ## Goals
 
