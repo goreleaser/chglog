@@ -62,6 +62,7 @@ func processMsg(msg string) string {
 	msg = strings.ReplaceAll(strings.ReplaceAll(msg, "\r\n\r\n", "\n\n"), "\r", "")
 	msg = regexp.MustCompile(`(?m)(?:^.*Signed-off-by:.*>$)`).ReplaceAllString(msg, "")
 	msg = strings.ReplaceAll(strings.Trim(msg, "\n"), "\n\n\n", "\n")
+
 	return msg
 }
 

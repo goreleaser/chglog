@@ -27,6 +27,7 @@ func GitHashFotTag(gitRepo *git.Repository, tagName string) (hash plumbing.Hash,
 	if err != nil {
 		return plumbing.ZeroHash, err
 	}
+
 	return ref.Hash(), nil
 }
 

@@ -21,6 +21,7 @@ func TestInitChangelog(t *testing.T) {
 	testCLE, err = InitChangelog(gitRepo, "", nil, nil, true)
 	if err != nil {
 		t.Error(err)
+
 		return
 	}
 

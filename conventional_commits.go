@@ -15,6 +15,7 @@ func ParseConventionalCommit(message string) (commit *ConventionalCommit) {
 	if len(match) == 0 {
 		parts := strings.SplitN(message, "\n", 2)
 		parts = append(parts, "")
+
 		return &ConventionalCommit{
 			Description: parts[0],
 			Body:        processMsg(parts[1]),
