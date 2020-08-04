@@ -21,6 +21,7 @@ func Parse(file string) (entries ChangeLogEntries, err error) {
 	}
 
 	err = yaml.Unmarshal(body, &entries)
+
 	return entries, err
 }
 

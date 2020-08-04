@@ -7,10 +7,9 @@ import (
 	"path/filepath"
 
 	"github.com/go-git/go-git/v5"
+	"github.com/goreleaser/chglog"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-
-	"github.com/goreleaser/chglog"
 )
 
 // ErrNoTags happens when a repository has no tags.

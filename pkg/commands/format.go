@@ -108,6 +108,7 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 
 		if output == "-" {
 			fmt.Println(ret)
+
 			return
 		}
 

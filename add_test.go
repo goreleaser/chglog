@@ -23,6 +23,7 @@ func TestAddEntry(t *testing.T) {
 	testCLE, err = InitChangelog(gitRepo, "", nil, nil, true)
 	if err != nil {
 		t.Error(err)
+
 		return
 	}
 	version, _ := semver.NewVersion("1.0.0-b1+git.123")
@@ -35,6 +36,7 @@ header entry
 	testCLE, err = AddEntry(gitRepo, version, "Dj Gilcrease", createNote(header, ""), nil, testCLE, true)
 	if err != nil {
 		t.Error(err)
+
 		return
 	}
 	// Fix the date since AddEntry uses time.Now

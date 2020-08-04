@@ -25,6 +25,7 @@ func TestFormatChangelog(t *testing.T) {
 
 	if testCLE, err = InitChangelog(gitRepo, "", nil, nil, true); err != nil {
 		t.Error(err)
+
 		return
 	}
 
@@ -41,9 +42,11 @@ func TestFormatChangelog(t *testing.T) {
 func accept(t *testing.T, tmplData string, pkg PackageChangeLog) {
 	if tpl, err := LoadTemplateData(tmplData); err != nil {
 		t.Error(err)
+
 		return
 	} else if testdata, err := FormatChangelog(&pkg, tpl); err != nil {
 		t.Error(err)
+
 		return
 	} else {
 		golddata, _ := ioutil.ReadFile(fmt.Sprintf("./testdata/%s", pkg.Name))
