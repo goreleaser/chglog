@@ -42,21 +42,21 @@ func setupInitCmd(config *viper.Viper) (cmd *cobra.Command) {
 			entries  chglog.ChangeLogEntries
 		)
 		if repoPath, err = os.Getwd(); err != nil {
-			return err
+			return fmt.Errorf("error initialzing change log: %w", err)
 		}
 
 		if len(args) == 1 {
 			if repoPath, err = filepath.Abs(args[0]); err != nil {
-				return err
+				return fmt.Errorf("error initialzing change log: %w", err)
 			}
 		}
 
 		if gitRepo, err = chglog.GitRepo(repoPath, true); err != nil {
-			return err
+			return fmt.Errorf("error initialzing change log: %w", err)
 		}
 
 		if entries, err = chglog.InitChangelog(gitRepo, config.GetString("owner"), nil, getDeb(config), config.GetBool("conventional-commits")); err != nil {
-			return err
+			return fmt.Errorf("error initialzing change log: %w", err)
 		}
 
 		if len(entries) == 0 {

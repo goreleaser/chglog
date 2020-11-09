@@ -26,7 +26,7 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 	)
 	cmd = &cobra.Command{
 		Use:   "format",
-		Short: "display version info",
+		Short: "format entries to a specific template",
 	}
 	cmd.Flags().StringVarP(
 		&output,
@@ -88,22 +88,22 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 		default:
 			// nolint: gosec, gocritic
 			if data, err = ioutil.ReadFile(templateFile); err != nil {
-				return err
+				return fmt.Errorf("error formatting entries: %w", err)
 			}
 			tpl, err = chglog.LoadTemplateData(string(data))
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("error formatting entries: %w", err)
 		}
 
 		fmtPackage.Name = config.GetString("package-name")
 
 		if fmtPackage.Entries, err = chglog.Parse(input); err != nil {
-			return err
+			return fmt.Errorf("error formatting entries: %w", err)
 		}
 
 		if ret, err = chglog.FormatChangelog(fmtPackage, tpl); err != nil {
-			return err
+			return fmt.Errorf("error formatting entries: %w", err)
 		}
 
 		if output == "-" {

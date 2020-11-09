@@ -1,6 +1,7 @@
 package chglog
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -17,12 +18,14 @@ func Parse(file string) (entries ChangeLogEntries, err error) {
 	case os.IsNotExist(err):
 		return make(ChangeLogEntries, 0), nil
 	case err != nil:
-		return nil, err
+		return nil, fmt.Errorf("error parsing %s: %w", file, err)
 	}
 
-	err = yaml.Unmarshal(body, &entries)
+	if err = yaml.Unmarshal(body, &entries); err != nil {
+		return entries, fmt.Errorf("error parsing %s: %w", file, err)
+	}
 
-	return entries, err
+	return entries, nil
 }
 
 // Save save ChangeLogEntries to a yml file.
