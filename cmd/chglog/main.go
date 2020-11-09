@@ -25,16 +25,7 @@ func main() {
 	}
 	cwd, _ := os.Getwd()
 	cfgFile := path.Join(cwd, fmt.Sprintf(".%s.yml", pkgName))
-	debug := false
 	config := setupConfig(cfgFile)
-
-	cmdRoot.PersistentFlags().BoolVarP(
-		&debug,
-		"debug",
-		"",
-		debug,
-		``)
-	config.BindPFlag("debug", cmdRoot.PersistentFlags().Lookup("debug"))
 
 	cmdRoot.PersistentFlags().StringVarP(
 		&cfgFile,

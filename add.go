@@ -32,20 +32,20 @@ func AddEntry(
 	)
 
 	if ref, err = gitRepo.Head(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error adding entry: %w", err)
 	}
 	from = ref.Hash()
 
 	to = plumbing.ZeroHash
 	if len(current) > 0 {
 		if to, err = GitHashFotTag(gitRepo, current[0].Semver); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("error adding entry: %w", err)
 		}
 	}
 
 	cle = append(cle, current...)
 	if commits, err = CommitsBetween(gitRepo, to, from); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error adding entry: %w", err)
 	}
 
 	if len(commits) == 0 {

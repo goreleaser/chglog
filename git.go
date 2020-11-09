@@ -2,6 +2,8 @@ package chglog
 
 import (
 	"errors"
+	"fmt"
+	"strings"
 
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
@@ -21,11 +23,11 @@ func GitRepo(gitPath string, detectDotGit bool) (*git.Repository, error) {
 func GitHashFotTag(gitRepo *git.Repository, tagName string) (hash plumbing.Hash, err error) {
 	var ref *plumbing.Reference
 	ref, err = gitRepo.Tag(tagName)
-	if errors.Is(err, git.ErrTagNotFound) {
+	if errors.Is(err, git.ErrTagNotFound) && !strings.HasPrefix(tagName, "v") {
 		ref, err = gitRepo.Tag("v" + tagName)
 	}
 	if err != nil {
-		return plumbing.ZeroHash, err
+		return plumbing.ZeroHash, fmt.Errorf("error getting commit for tag %s: %w", tagName, err)
 	}
 
 	return ref.Hash(), nil
@@ -52,7 +54,7 @@ func CommitsBetween(gitRepo *git.Repository, start, end plumbing.Hash) (commits 
 	})
 
 	if err != nil && !errors.Is(err, errReachedToCommit) {
-		return nil, err
+		return nil, fmt.Errorf("error getting commits between %v & %v: %w", start, end, err)
 	}
 
 	return commits, nil

@@ -89,27 +89,27 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 		)
 
 		if repoPath, err = os.Getwd(); err != nil {
-			return err
+			return fmt.Errorf("error adding entry: %w", err)
 		}
 
 		if len(args) == 1 {
 			if repoPath, err = filepath.Abs(args[0]); err != nil {
-				return err
+				return fmt.Errorf("error adding entry: %w", err)
 			}
 		}
 
 		if entries, err = chglog.Parse(input); err != nil {
-			return err
+			return fmt.Errorf("error adding entry: %w", err)
 		}
 
 		if gitRepo, err = chglog.GitRepo(repoPath, true); err != nil {
-			return err
+			return fmt.Errorf("error adding entry: %w", err)
 		}
 
 		if headerFile != "" {
 			// nolint: gosec, gocritic
 			if data, err = ioutil.ReadFile(headerFile); err != nil {
-				return err
+				return fmt.Errorf("error adding entry: %w", err)
 			}
 			header = string(data)
 		}
@@ -117,7 +117,7 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 		if footerFile != "" {
 			// nolint: gosec, gocritic
 			if data, err = ioutil.ReadFile(footerFile); err != nil {
-				return err
+				return fmt.Errorf("error adding entry: %w", err)
 			}
 			footer = string(data)
 		}
@@ -134,11 +134,11 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 		}
 
 		if semv, err = semver.NewVersion(version); err != nil {
-			return err
+			return fmt.Errorf("error adding entry: %w", err)
 		}
 
 		if entries, err = chglog.AddEntry(gitRepo, semv, config.GetString("owner"), notes, getDeb(config), entries, config.GetBool("conventional-commits")); err != nil {
-			return err
+			return fmt.Errorf("error adding entry: %w", err)
 		}
 
 		if len(entries) == 0 {

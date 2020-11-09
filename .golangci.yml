@@ -5,6 +5,7 @@ linters:
     - wsl
     - testpackage
     - gofumpt
+    - exhaustivestruct
 linters-settings:
   maligned:
     # print struct with more effective memory layout or not, false by default

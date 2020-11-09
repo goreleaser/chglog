@@ -6,3 +6,4 @@ dist
 bin
 coverage.out
 chglog
+!chglog/

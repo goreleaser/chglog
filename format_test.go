@@ -19,6 +19,7 @@ func TestFormatChangelog(t *testing.T) {
 		gitRepo *git.Repository
 		testCLE ChangeLogEntries
 	)
+	t.Parallel()
 	if gitRepo, err = GitRepo("./testdata/init-repo", false); err != nil {
 		log.Fatal(err)
 	}
