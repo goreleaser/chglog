@@ -67,7 +67,7 @@ func getDeb(config *viper.Viper) (deb *chglog.ChangelogDeb) {
 		distributions []string
 	)
 	urgency = config.GetString("deb.urgency")
-	distributions = config.GetStringSlice("deb.distributions")
+	distributions = config.GetStringSlice("deb.distribution")
 	if len(distributions) > 0 && urgency != "" {
 		deb = &chglog.ChangelogDeb{
 			Urgency:       urgency,
