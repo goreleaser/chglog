@@ -39,7 +39,7 @@
         name: Dj Gilcrease
         email: d.gilcrease@f5.com
       conventional_commit:
-        category: ""
+        category: "chore"
         scope: ""
         breaking: false
         description: oops i forgot to use Conventional Commits style message
@@ -61,7 +61,9 @@
         scope: ""
         breaking: true
         description: added file two feature
-        body: 'BREAKING CHANGE: this is a backwards incompatible change'
+        major: true
+        footer:
+        - 'BREAKING CHANGE: this is a backwards incompatible change'
     - commit: 2cc00abc77d401a541d18c26e5c7fbef1effd3ed
       note: |-
         feat: added the fileone feature
@@ -79,6 +81,7 @@
         scope: ""
         breaking: false
         description: added the fileone feature
+        minor: true
         body: |-
           * This is a test repo
           * so ya!

@@ -11,10 +11,13 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
+	conventional_commit "gitlab.com/digitalxero/go-conventional-commit"
 )
 
 // ErrNoCommits happens when no commits are found for a given entry.
 var ErrNoCommits = errors.New("no commits found for this entry")
+
+var signedOffRegEx = regexp.MustCompile(`(?m)(?:^.*Signed-off-by:.*>$)`)
 
 // AddEntry add a ChangeLog entry to an existing ChangeLogEntries that.
 func AddEntry(
@@ -60,7 +63,7 @@ func AddEntry(
 
 func processMsg(msg string) string {
 	msg = strings.ReplaceAll(strings.ReplaceAll(msg, "\r\n\r\n", "\n\n"), "\r", "")
-	msg = regexp.MustCompile(`(?m)(?:^.*Signed-off-by:.*>$)`).ReplaceAllString(msg, "")
+	msg = signedOffRegEx.ReplaceAllString(msg, "")
 	msg = strings.ReplaceAll(strings.Trim(msg, "\n"), "\n\n\n", "\n")
 
 	return msg
@@ -68,7 +71,7 @@ func processMsg(msg string) string {
 
 // CreateEntry create a ChangeLog object.
 func CreateEntry(date time.Time, version fmt.Stringer, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, commits []*object.Commit, useConventionalCommits bool) (changelog *ChangeLog) {
-	var cc *ConventionalCommit
+	var cc *conventional_commit.ConventionalCommit
 	changelog = &ChangeLog{
 		Semver:   version.String(),
 		Date:     date,
@@ -84,7 +87,7 @@ func CreateEntry(date time.Time, version fmt.Stringer, owner string, notes *Chan
 	for idx, c := range commits {
 		msg := processMsg(c.Message)
 		if useConventionalCommits {
-			cc = ParseConventionalCommit(msg)
+			cc = conventional_commit.ParseConventionalCommit(msg)
 		}
 		changelog.Changes[idx] = &ChangeLogChange{
 			Commit: c.Hash.String(),
