@@ -3,11 +3,10 @@ package chglog
 import (
 	"log"
 	"testing"
-	"time"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/go-git/go-git/v5"
-	"github.com/google/go-cmp/cmp"
+	"github.com/smartystreets/goconvey/convey"
 )
 
 func TestAddEntry(t *testing.T) {
@@ -16,15 +15,18 @@ func TestAddEntry(t *testing.T) {
 		gitRepo *git.Repository
 		testCLE ChangeLogEntries
 	)
+	goldcle, err := Parse("./testdata/gold-add-changelog.yml")
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	if gitRepo, err = GitRepo("./testdata/add-repo", false); err != nil {
 		log.Fatal(err)
 	}
 
 	testCLE, err = InitChangelog(gitRepo, "", nil, nil, true)
 	if err != nil {
-		t.Error(err)
-
-		return
+		t.Fatal(err)
 	}
 	version, _ := semver.NewVersion("1.0.0-b1+git.123")
 	header := `
@@ -35,18 +37,17 @@ header entry
 `
 	testCLE, err = AddEntry(gitRepo, version, "Dj Gilcrease", createNote(header, ""), nil, testCLE, true)
 	if err != nil {
-		t.Error(err)
-
-		return
+		t.Fatal(err)
 	}
+	if len(goldcle) != len(testCLE) {
+		t.Fatal("differing results")
+	}
+
 	// Fix the date since AddEntry uses time.Now
-	testCLE[0].Date, _ = time.Parse(time.RFC3339Nano, "2019-10-18T18:17:57.934767812-07:00")
-	goldcle, err := Parse("./testdata/gold-add-changelog.yml")
-	if err != nil {
-		t.Error(err)
+	for i, e := range goldcle {
+		testCLE[i].Date = e.Date
 	}
-
-	if diff := cmp.Diff(goldcle, testCLE); diff != "" {
-		t.Errorf("ChangeLogEntries mismatch (+got -want):\n%s", diff)
-	}
+	convey.Convey("Generated entry should be the same as the golden entry", t, func() {
+		convey.So(testCLE, convey.ShouldResemble, goldcle)
+	})
 }
