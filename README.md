@@ -32,7 +32,7 @@ https://github.com/goreleaser/nfpm and the deb and rpm changelog formats not bei
 * [x] be possible to use it as a lib in other go projects (namely [goreleaser][] itself)
 
 ## Install
-`go get github.com/djgilcrease/chglog/cmd/chglog`
+`go get github.com/goreleaser/chglog/cmd/chglog`
 
 ## Usage
 
