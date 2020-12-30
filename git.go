@@ -38,14 +38,19 @@ func CommitsBetween(gitRepo *git.Repository, start, end plumbing.Hash) (commits 
 	var (
 		commitIter object.CommitIter
 	)
-	commitIter, err = gitRepo.Log(&git.LogOptions{From: end})
+	if commitIter, err = gitRepo.Log(&git.LogOptions{
+		From:  start,
+		Order: git.LogOrderCommitterTime,
+	}); err != nil {
+		return nil, fmt.Errorf("error getting commits between %v & %v: %w", start, end, err)
+	}
 	defer commitIter.Close()
 	err = commitIter.ForEach(func(c *object.Commit) error {
 		// If no previous tag is found then from and to are equal
 		if end == start {
 			return nil
 		}
-		if c.Hash == start {
+		if c.Hash == end {
 			return errReachedToCommit
 		}
 		commits = append(commits, c)
