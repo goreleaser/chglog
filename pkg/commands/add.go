@@ -7,11 +7,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Masterminds/semver"
+	"github.com/Masterminds/semver/v3"
 	"github.com/go-git/go-git/v5"
-	"github.com/goreleaser/chglog"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/goreleaser/chglog"
 )
 
 // nolint: gocognit, funlen, gocritic
