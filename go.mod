@@ -14,7 +14,7 @@ require (
 	github.com/mitchellh/copystructure v1.0.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.1 // indirect
 	github.com/smartystreets/goconvey v1.6.4
-	github.com/spf13/cobra v1.1.3
+	github.com/spf13/cobra v1.2.0
 	github.com/spf13/viper v1.8.1
 	gitlab.com/digitalxero/go-conventional-commit v1.0.7
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
