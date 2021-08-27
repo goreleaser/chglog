@@ -1,0 +1,132 @@
+- semver: 0.10.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 6cfa531ce3ac4bd4b4ec2522c2ab8d252e722a2c
+      note: commit 10
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.9.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 66ec5a3714a3ea6dbaa8843f4d63cc377bf31d77
+      note: commit 9
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.8.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 70b65ab708ffb8a0935da4bb8d3831f8c2230c5c
+      note: commit 8
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.7.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: c0510b7bd8342631a45a9ea67481ad0d9822f60b
+      note: commit 7
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.6.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 677fb751e382174fc2d53068ee25f2d3863ccd19
+      note: commit 6
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.5.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 85816484794feac8d53e0a13d14254972edbbddf
+      note: commit 5
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.4.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 6ac70628dc692b5dec91438e133c97808256a035
+      note: commit 4
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.3.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 6271fd4a63f296e3df46e4c0e7dcb948e2a3b066
+      note: commit 3
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.2.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 6bfe64ae8f93108e5e0a85f43736459ac6ee0642
+      note: commit 2
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.1.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 3b2811fc8b1a7a073ffb739e3766b47a3c81286d
+      note: commit 1
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
+- semver: 0.0.0
+  date: 2000-01-01T12:00:00+07:00
+  packager: John Doe <John.Doe@example.com>
+  changes:
+    - commit: 1807a212fb257a8258a238d2028c6622fa71035c
+      note: commit 0
+      author:
+        name: John Doe
+        email: John.Doe@example.com
+      committer:
+        name: John Doe
+        email: John.Doe@example.com
