@@ -97,7 +97,7 @@ easy and will surely help the developers at least buy some ☕️ or 🍺!
 
 ## Stargazers over time
 
-[![goreleaser/chglog stargazers over time](https://starcharts.herokuapp.com/goreleaser/chglog.svg)](https://starcharts.herokuapp.com/goreleaser/chglog)
+[![goreleaser/chglog stargazers over time](https://starchart.cc/goreleaser/chglog.svg)](https://starchart.cc/goreleaser/chglog)
 
 ---
 
