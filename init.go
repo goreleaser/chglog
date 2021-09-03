@@ -3,6 +3,7 @@ package chglog
 import (
 	"errors"
 	"fmt"
+	"os"
 	"sort"
 
 	"github.com/Masterminds/semver/v3"
@@ -34,7 +35,8 @@ func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes,
 		tagName := t.Name().Short()
 
 		if version, err = semver.NewVersion(tagName); err != nil || version == nil {
-			return fmt.Errorf("unable to parse version from tag: %s : %w", tagName, err)
+			fmt.Fprintf(os.Stderr, "Warning: unable to parse version from tag: %s : %v\n", tagName, err)
+			return nil
 		}
 
 		tags = append(tags, version)
