@@ -16,7 +16,7 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.1 // indirect
 	github.com/smartystreets/goconvey v1.7.2
 	github.com/spf13/cobra v1.2.1
-	github.com/spf13/viper v1.9.0
+	github.com/spf13/viper v1.10.1
 	gitlab.com/digitalxero/go-conventional-commit v1.0.7
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
