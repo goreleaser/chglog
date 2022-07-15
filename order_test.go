@@ -122,6 +122,98 @@ func TestOrderChangelog(t *testing.T) {
 	})
 }
 
+func TestOffBranchTags(t *testing.T) {
+	cle, err := Parse("./testdata/gold-order-changelog.yml")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// remove odd entries
+
+	goldCLE := make(ChangeLogEntries, len(cle)/2+1)
+	for i := range cle {
+		if i%2 == 0 {
+			goldCLE[i/2] = cle[i]
+		}
+	}
+
+	repo := newTestRepo()
+	tree, err := repo.Git.Worktree()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// initial commit on master
+
+	hash := repo.modifyAndCommit("file", defCommitOptions())
+	if _, err = repo.Git.CreateTag("v0.0.0", hash, nil); err != nil {
+		t.Fatal(err)
+	}
+
+	// second commit on develop
+
+	err = tree.Checkout(&git.CheckoutOptions{
+		Branch: plumbing.NewBranchReferenceName("develop"),
+		Create: true,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	hash = repo.modifyAndCommit("file", defCommitOptions())
+	if _, err = repo.Git.CreateTag("v0.1.0", hash, nil); err != nil {
+		t.Fatal(err)
+	}
+
+	// alternate branches for commits
+
+	master := plumbing.NewBranchReferenceName("master")
+	develop := plumbing.NewBranchReferenceName("develop")
+
+	for i := 2; i <= 10; i++ {
+		branch := master
+		if i%2 != 0 {
+			branch = develop
+		}
+
+		t.Logf("%v branch=%v\n", i, branch)
+
+		err = tree.Checkout(&git.CheckoutOptions{Branch: branch})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		hash := repo.modifyAndCommit("file", defCommitOptions())
+
+		if _, err = repo.Git.CreateTag(fmt.Sprintf("v0.%d.0", i), hash, nil); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	testCLE, err := InitChangelog(repo.Git, "", nil, nil, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// zero all commit hashes (don't care about these)
+
+	for i := range testCLE {
+		for j := range testCLE[i].Changes {
+			testCLE[i].Changes[j].Commit = ""
+		}
+	}
+	for i := range goldCLE {
+		for j := range goldCLE[i].Changes {
+			goldCLE[i].Changes[j].Commit = ""
+		}
+	}
+
+	Convey("Generated entry should be the same as the golden entry", t, func() {
+		So(testCLE, ShouldResemble, goldCLE)
+	})
+
+}
+
 func TestSemverTag(t *testing.T) {
 	repo := newTestRepo()
 	tag := "1.0.0"
