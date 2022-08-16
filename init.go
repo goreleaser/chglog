@@ -1,7 +1,6 @@
 package chglog
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"sort"
@@ -10,64 +9,30 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
-	"github.com/go-git/go-git/v5/plumbing/storer"
 )
 
-// InitChangelog create a new ChangeLogEntries from a git repo.
-func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, useConventionalCommits bool) (cle ChangeLogEntries, err error) {
-	var (
-		tagRefs    storer.ReferenceIter
-		tags       []*semver.Version
-		start, end plumbing.Hash
-	)
-
-	cle = make(ChangeLogEntries, 0)
-	end = plumbing.ZeroHash
-
-	if tagRefs, err = gitRepo.Tags(); err != nil {
-		return nil, fmt.Errorf("unable to fetch tags: %w", err)
+func versionsInRepo(gitRepo *git.Repository) (map[plumbing.Hash]*semver.Version, error) {
+	tagRefs, err := gitRepo.Tags()
+	if err != nil {
+		return nil, err
 	}
+
 	defer tagRefs.Close()
 
-	if err = tagRefs.ForEach(func(t *plumbing.Reference) error {
-		var version *semver.Version
+	tags := make(map[plumbing.Hash]*semver.Version)
+
+	err = tagRefs.ForEach(func(t *plumbing.Reference) error {
+		var (
+			version *semver.Version
+			tag     *object.Tag
+		)
 
 		tagName := t.Name().Short()
+		hash := t.Hash()
 
 		if version, err = semver.NewVersion(tagName); err != nil || version == nil {
 			fmt.Fprintf(os.Stderr, "Warning: unable to parse version from tag: %s : %v\n", tagName, err)
 			return nil
-		}
-
-		tags = append(tags, version)
-		return nil
-	}); err != nil {
-		return nil, err
-	}
-
-	sort.Slice(tags, func(i, j int) bool { return tags[i].LessThan(tags[j]) })
-
-	for _, version := range tags {
-		tagName := version.Original()
-
-		t, err := gitRepo.Tag(tagName)
-		if err != nil {
-			return nil, err
-		}
-
-		var (
-			commits      []*object.Commit
-			commitObject *object.Commit
-			tag          *object.Tag
-		)
-
-		if version.Prerelease() != "" {
-			// Do not need change logs for pre-release entries
-			continue
-		}
-
-		if start, err = GitHashFotTag(gitRepo, tagName); err != nil {
-			return nil, fmt.Errorf("unable to find hash for tag: %s : %w", tagName, err)
 		}
 
 		// If this is an annotated tag look up the hash of the commit and use that.
@@ -75,18 +40,84 @@ func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes,
 			var c *object.Commit
 
 			if c, err = tag.Commit(); err != nil {
-				return nil, fmt.Errorf("cannot dereference annotated tag: %s : %w", tagName, err)
+				return fmt.Errorf("cannot dereference annotated tag: %s : %w", tagName, err)
 			}
-			start = c.Hash
+			hash = c.Hash
 		}
 
-		if commitObject, err = gitRepo.CommitObject(start); err != nil {
-			// This ignores objects that are off branch which happens when tagging on multiple branches happens.
-			if errors.Is(err, plumbing.ErrObjectNotFound) {
-				continue
-			}
-			return nil, fmt.Errorf("unable to fetch commit from tag %v: %w", tagName, err)
+		tags[hash] = version
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return tags, nil
+}
+
+func versionsOnBranch(gitRepo *git.Repository) (map[*semver.Version]plumbing.Hash, error) {
+	repoVersions, err := versionsInRepo(gitRepo)
+	if err != nil {
+		return nil, err
+	}
+
+	refs, err := gitRepo.Log(&git.LogOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	defer refs.Close()
+
+	versions := make(map[*semver.Version]plumbing.Hash)
+
+	err = refs.ForEach(func(c *object.Commit) error {
+		if v, ok := repoVersions[c.Hash]; ok {
+			versions[v] = c.Hash
 		}
+		return nil
+	})
+
+	return versions, err
+}
+
+// InitChangelog create a new ChangeLogEntries from a git repo.
+func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, useConventionalCommits bool) (cle ChangeLogEntries, err error) {
+	var start, end plumbing.Hash
+
+	cle = make(ChangeLogEntries, 0)
+	end = plumbing.ZeroHash
+
+	versions, err := versionsOnBranch(gitRepo)
+	if err != nil {
+		return nil, err
+	}
+
+	tags := make([]*semver.Version, 0, len(versions))
+	for v := range versions {
+		tags = append(tags, v)
+	}
+
+	sort.Slice(tags, func(i, j int) bool { return tags[i].LessThan(tags[j]) })
+
+	for _, version := range tags {
+		var (
+			commits      []*object.Commit
+			commitObject *object.Commit
+		)
+
+		if version.Prerelease() != "" {
+			// Do not need change logs for pre-release entries
+			continue
+		}
+
+		start = versions[version]
+
+		if commitObject, err = gitRepo.CommitObject(start); err != nil {
+			return nil, fmt.Errorf("unable to fetch commit from tag %v: %w", version.Original(), err)
+		}
+
 		if owner == "" {
 			owner = fmt.Sprintf("%s <%s>", commitObject.Committer.Name, commitObject.Committer.Email)
 		}
