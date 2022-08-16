@@ -1,9 +1,10 @@
-env:
-  - GO111MODULE=on
-  - GOPROXY=https://gocenter.io
 before:
   hooks:
   - go mod tidy
+
+gomod:
+  proxy: true
+
 builds:
 - main: ./cmd/chglog
   env:
@@ -15,10 +16,40 @@ builds:
   goarch:
   - amd64
   - arm64
+  mod_timestamp: '{{ .CommitTimestamp }}'
+  flags:
+    - -trimpath
+  ldflags:
+    - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }} -X main.builtBy=goreleaser
+
 changelog:
+  sort: asc
+  use: github
   filters:
     exclude:
-      - Merge
+    - '^test:'
+    - '^chore'
+    - 'merge conflict'
+    - Merge pull request
+    - Merge remote-tracking branch
+    - Merge branch
+    - go mod tidy
+  groups:
+    - title: Dependency updates
+      regexp: "^.*feat\\(deps\\)*:+.*$"
+      order: 300
+    - title: 'New Features'
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 100
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 200
+    - title: 'Documentation updates'
+      regexp: "^.*docs[(\\w)]*:+.*$"
+      order: 400
+    - title: Other work
+      order: 9999
+
 archives:
   - replacements:
       darwin: Darwin
@@ -52,3 +83,15 @@ scoop:
   homepage:  https://goreleaser.com
   description: Deliver Go binaries as fast and easily as possible
   license: MIT
+
+
+release:
+  footer: |
+    **Full Changelog**: https://github.com/goreleaser/goreleaser/compare/{{ .PreviousTag }}...{{ .Tag }}
+
+    ## What to do next?
+
+    - Read the [documentation](https://goreleaser.com/intro/)
+    - Check out the [GoReleaser Pro](https://goreleaser.com/pro) distribution
+    - Join our [Discord server](https://discord.gg/RGEBtg8vQ6)
+    - Follow us on [Twitter](https://twitter.com/goreleaser)
