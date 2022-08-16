@@ -9,7 +9,7 @@ require (
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/google/go-cmp v0.5.6
 	github.com/smartystreets/goconvey v1.7.2
-	github.com/spf13/cobra v1.4.0
+	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.10.1
 	gitlab.com/digitalxero/go-conventional-commit v1.0.7
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
