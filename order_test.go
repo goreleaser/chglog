@@ -54,7 +54,7 @@ func (r *testRepo) modifyAndCommit(filename string, opts *git.CommitOptions) plu
 		file billy.File
 	)
 
-	if file, err = r.Source.Filesystem.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666); err != nil {
+	if file, err = r.Source.Filesystem.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o666); err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
@@ -120,7 +120,6 @@ func TestOrderChangelog(t *testing.T) {
 	Convey("Generated entry should be the same as the golden entry", t, func() {
 		So(testCLE, ShouldResemble, goldCLE)
 	})
-
 }
 
 func TestSemverTag(t *testing.T) {

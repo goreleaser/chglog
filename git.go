@@ -35,9 +35,7 @@ func GitHashFotTag(gitRepo *git.Repository, tagName string) (hash plumbing.Hash,
 
 // CommitsBetween return the list of commits between two commits.
 func CommitsBetween(gitRepo *git.Repository, start, end plumbing.Hash) (commits []*object.Commit, err error) {
-	var (
-		commitIter object.CommitIter
-	)
+	var commitIter object.CommitIter
 	if commitIter, err = gitRepo.Log(&git.LogOptions{
 		From:  start,
 		Order: git.LogOrderCommitterTime,

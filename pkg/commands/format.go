@@ -17,13 +17,11 @@ var ErrTemplateFlags = errors.New("--template and --template-file are mutually e
 
 // nolint: funlen, gocritic
 func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
-	var (
-		input,
+	var input,
 		output,
 		pkg,
 		templateName,
 		templateFile string
-	)
 	cmd = &cobra.Command{
 		Use:   "format",
 		Short: "format entries to a specific template",
@@ -113,7 +111,7 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 		}
 
 		// nolint: gosec, gocritic
-		return ioutil.WriteFile(output, []byte(ret), 0644)
+		return ioutil.WriteFile(output, []byte(ret), 0o644)
 	}
 
 	return cmd

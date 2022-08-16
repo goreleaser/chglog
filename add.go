@@ -27,7 +27,8 @@ func AddEntry(
 	notes *ChangeLogNotes,
 	deb *ChangelogDeb,
 	current ChangeLogEntries,
-	useConventionalCommits bool) (cle ChangeLogEntries, err error) {
+	useConventionalCommits bool,
+) (cle ChangeLogEntries, err error) {
 	var (
 		ref      *plumbing.Reference
 		from, to plumbing.Hash

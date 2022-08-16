@@ -24,7 +24,7 @@ cover: test
 
 fmt:
 	go mod tidy
-	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofmt -w -s "$$file"; goimports -w "$$file"; done
+	gofumpt -w -l .
 .PHONY: fmt
 
 lint: check
