@@ -51,17 +51,11 @@ func commonFlags(cmd *cobra.Command, config *viper.Viper) (*cobra.Command, *vipe
 		distribution,
 		`set debian distributions for`)
 
-	cmd.PreRunE = func(c *cobra.Command, args []string) error {
-		if err := config.BindPFlag("conventional-commits", cmd.Flags().Lookup("conventional-commits")); err != nil {
-			return err
-		}
-		if err := config.BindPFlag("owner", cmd.Flags().Lookup("owner")); err != nil {
-			return err
-		}
-		if err := config.BindPFlag("deb.urgency", cmd.Flags().Lookup("deb-urgency")); err != nil {
-			return err
-		}
-		return config.BindPFlag("deb.distribution", cmd.Flags().Lookup("deb-distribution"))
+	cmd.PreRun = func(c *cobra.Command, args []string) {
+		_ = config.BindPFlag("conventional-commits", cmd.Flags().Lookup("conventional-commits"))
+		_ = config.BindPFlag("owner", cmd.Flags().Lookup("owner"))
+		_ = config.BindPFlag("deb.urgency", cmd.Flags().Lookup("deb-urgency"))
+		_ = config.BindPFlag("deb.distribution", cmd.Flags().Lookup("deb-distribution"))
 	}
 
 	return cmd, config

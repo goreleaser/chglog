@@ -58,9 +58,7 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"",
 		"custom template file to use")
 
-	cmd.PreRunE = func(cmd *cobra.Command, args []string) error {
-		return config.BindPFlag("package-name", cmd.Flags().Lookup("package-name"))
-	}
+	_ = config.BindPFlag("package-name", cmd.Flags().Lookup("package-name"))
 	cmd.PersistentPreRun = func(c *cobra.Command, args []string) {
 		cmd.Parent().PersistentPreRun(c, args)
 	}
