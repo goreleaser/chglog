@@ -3,7 +3,7 @@ package commands
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 	"text/template"
 
@@ -44,7 +44,6 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"p",
 		"",
 		"package name to use in formatting")
-	config.BindPFlag("package-name", cmd.Flags().Lookup("package-name"))
 
 	cmd.Flags().StringVarP(
 		&templateName,
@@ -59,6 +58,9 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"",
 		"custom template file to use")
 
+	cmd.PreRunE = func(cmd *cobra.Command, args []string) error {
+		return config.BindPFlag("package-name", cmd.Flags().Lookup("package-name"))
+	}
 	cmd.PersistentPreRun = func(c *cobra.Command, args []string) {
 		cmd.Parent().PersistentPreRun(c, args)
 	}
@@ -85,7 +87,7 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 			tpl, err = chglog.RepoTemplate()
 		default:
 			// nolint: gosec, gocritic
-			if data, err = ioutil.ReadFile(templateFile); err != nil {
+			if data, err = os.ReadFile(templateFile); err != nil {
 				return fmt.Errorf("error formatting entries: %w", err)
 			}
 			tpl, err = chglog.LoadTemplateData(string(data))
@@ -111,7 +113,7 @@ func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 		}
 
 		// nolint: gosec, gocritic
-		return ioutil.WriteFile(output, []byte(ret), 0o644)
+		return os.WriteFile(output, []byte(ret), 0o644)
 	}
 
 	return cmd

@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -109,7 +108,7 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 
 		if headerFile != "" {
 			// nolint: gosec, gocritic
-			if data, err = ioutil.ReadFile(headerFile); err != nil {
+			if data, err = os.ReadFile(headerFile); err != nil {
 				return fmt.Errorf("error adding entry: %w", err)
 			}
 			header = string(data)
@@ -117,7 +116,7 @@ func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
 
 		if footerFile != "" {
 			// nolint: gosec, gocritic
-			if data, err = ioutil.ReadFile(footerFile); err != nil {
+			if data, err = os.ReadFile(footerFile); err != nil {
 				return fmt.Errorf("error adding entry: %w", err)
 			}
 			footer = string(data)

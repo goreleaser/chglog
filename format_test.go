@@ -2,8 +2,8 @@ package chglog
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"testing"
 
 	"github.com/go-git/go-git/v5"
@@ -41,6 +41,7 @@ func TestFormatChangelog(t *testing.T) {
 }
 
 func accept(t *testing.T, tmplData string, pkg PackageChangeLog) {
+	t.Helper()
 	if tpl, err := LoadTemplateData(tmplData); err != nil {
 		t.Error(err)
 
@@ -50,7 +51,7 @@ func accept(t *testing.T, tmplData string, pkg PackageChangeLog) {
 
 		return
 	} else {
-		golddata, _ := ioutil.ReadFile(fmt.Sprintf("./testdata/%s", pkg.Name))
+		golddata, _ := os.ReadFile(fmt.Sprintf("./testdata/%s", pkg.Name))
 
 		if diff := cmp.Diff(string(golddata), testdata); diff != "" {
 			t.Errorf("FormatChangelog mismatch (+got -want):\n%s", diff)
