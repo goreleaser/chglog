@@ -25,11 +25,7 @@ func main() {
 	}
 	cwd, _ := os.Getwd()
 	cfgFile := path.Join(cwd, fmt.Sprintf(".%s.yml", pkgName))
-	config, err := setupConfig(cfgFile)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(127)
-	}
+	config := setupConfig(cfgFile)
 
 	cmdRoot.PersistentFlags().StringVarP(
 		&cfgFile,
