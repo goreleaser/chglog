@@ -17,29 +17,33 @@
 
 ## Why
 
-While there are other tool out there that will create a changelog output as part of their workflow none of the ones
-I could find did so in a way that allowed formatting the output via multiple templates.
+While there are other tool out there that will create a changelog output as part
+of their workflow none of the ones I could find did so in a way that allowed
+formatting the output via multiple templates.
 
-The need to multiple output formats was being driven by the desire to add changelog support to
-https://github.com/goreleaser/nfpm and the deb and rpm changelog formats not being the same.
+The need to multiple output formats was being driven by the desire to add
+changelog support to https://github.com/goreleaser/nfpm and the deb and rpm
+changelog formats not being the same.
 
 ## Goals
 
 * [x] be simple to use
-* [x] provide decent default templates for deb, rpm, release, and repo style changelog formats
+* [x] provide decent default templates for deb, rpm, release and repository
+  style changelog formats
 * [x] be distributed as a single binary
 * [x] reproducible results
   * [x] depend on the fewer external things as possible
   * [x] store changelog in a transportable format (.yml)
-* [x] be possible to use it as a lib in other go projects (namely [goreleaser](https://goreleaser.com) itself)
+* [x] be possible to use it as a lib in other go projects (namely
+  [goreleaser](https://goreleaser.com) itself)
 
 ## Install
 `go get github.com/goreleaser/chglog/cmd/chglog`
 
 ## Usage
 
-The first steps are to run `chglog config` to initialize a config file (`.chglog.yml`) and edit
-the generated file according to your needs:
+The first steps are to run `chglog config` to initialize a config file
+(`.chglog.yml`) and edit the generated file according to your needs:
 
 ```yaml
 conventional-commits: false
@@ -76,9 +80,11 @@ The next step is to run `chglog init`.
       * so ya!
 ```
 
-Then to generate a `CHANGELOG.md` file you would do `chglog format --template repo > CHANGELOG.md`
+Then to generate a `CHANGELOG.md` file you would do `chglog format --template
+repo > CHANGELOG.md`
 
-Now whenever you goto do another release you would do `chglog add --version v#.#.#` (version MUST be semver format)
+Now whenever you goto do another release you would do `chglog add --version
+v#.#.#` (version MUST be semver format)
 
 And that's it!
 
@@ -103,4 +109,5 @@ easy and will surely help the developers at least buy some ☕️ or 🍺!
 
 ---
 
-Would you like to fix something in the documentation? Feel free to open an [issue](https://github.com/goreleaser/chglog/issues).
+Would you like to fix something in the documentation? Feel free to open an
+[issue](https://github.com/goreleaser/chglog/issues).
