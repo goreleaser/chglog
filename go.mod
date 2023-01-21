@@ -9,7 +9,7 @@ require (
 	github.com/go-git/go-git/v5 v5.2.0
 	github.com/google/go-cmp v0.5.9
 	github.com/smartystreets/goconvey v1.7.2
-	github.com/spf13/cobra v1.5.0
+	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.15.0
 	gitlab.com/digitalxero/go-conventional-commit v1.0.7
 	gopkg.in/yaml.v3 v3.0.1
@@ -27,7 +27,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/kevinburke/ssh_config v1.1.0 // indirect
