@@ -5,7 +5,9 @@
   <p align="center">
     <a href="https://github.com/goreleaser/chglog/releases/latest"><img alt="Release" src="https://img.shields.io/github/release/goreleaser/chglog.svg?style=for-the-badge"></a>
     <a href="/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge"></a>
-    <a href="https://github.com/goreleaser/chglog/actions?workflow=build"><img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/goreleaser/chglog/build?style=for-the-badge"></a>
+    <a href="https://github.com/goreleaser/chglog/actions?workflow=build"><img
+	alt="GitHub Actions"
+	src="https://img.shields.io/github/actions/workflow/status/goreleaser/chglog/build.yml?style=for-the-badge"></a>
     <a href="https://codecov.io/gh/goreleaser/chglog"><img alt="Codecov branch" src="https://img.shields.io/codecov/c/github/goreleaser/chglog/master.svg?style=for-the-badge"></a>
     <a href="https://goreportcard.com/report/github.com/goreleaser/chglog"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/goreleaser/chglog?style=for-the-badge"></a>
     <a href="http://godoc.org/github.com/goreleaser/chglog"><img alt="Go Doc" src="https://img.shields.io/badge/godoc-reference-blue.svg?style=for-the-badge"></a>
