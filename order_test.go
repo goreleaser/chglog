@@ -47,7 +47,8 @@ func newTestRepo() *testRepo {
 
 // modifyAndCommit creates the file if it does not exist, appends a
 // change, commits the file, and returns the hash of the commit.
-func (r *testRepo) modifyAndCommit(filename string, opts *git.CommitOptions) plumbing.Hash {
+func (r *testRepo) modifyAndCommit(opts *git.CommitOptions) plumbing.Hash {
+	filename := "file"
 	var (
 		hash plumbing.Hash
 		err  error
@@ -105,7 +106,7 @@ func TestOrderChangelog(t *testing.T) {
 	repo := newTestRepo()
 
 	for i := 0; i <= 10; i++ {
-		hash := repo.modifyAndCommit("file", defCommitOptions())
+		hash := repo.modifyAndCommit(defCommitOptions())
 
 		if _, err = repo.Git.CreateTag(fmt.Sprintf("v0.%d.0", i), hash, nil); err != nil {
 			t.Fatal(err)
@@ -145,7 +146,7 @@ func TestOffBranchTags(t *testing.T) {
 
 	// initial commit on master
 
-	hash := repo.modifyAndCommit("file", defCommitOptions())
+	hash := repo.modifyAndCommit(defCommitOptions())
 	if _, err = repo.Git.CreateTag("v0.0.0", hash, nil); err != nil {
 		t.Fatal(err)
 	}
@@ -160,7 +161,7 @@ func TestOffBranchTags(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	hash = repo.modifyAndCommit("file", defCommitOptions())
+	hash = repo.modifyAndCommit(defCommitOptions())
 	if _, err = repo.Git.CreateTag("v0.1.0", hash, nil); err != nil {
 		t.Fatal(err)
 	}
@@ -183,7 +184,7 @@ func TestOffBranchTags(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		hash := repo.modifyAndCommit("file", defCommitOptions())
+		hash := repo.modifyAndCommit(defCommitOptions())
 
 		if _, err = repo.Git.CreateTag(fmt.Sprintf("v0.%d.0", i), hash, nil); err != nil {
 			t.Fatal(err)
@@ -211,7 +212,6 @@ func TestOffBranchTags(t *testing.T) {
 	Convey("Generated entry should be the same as the golden entry", t, func() {
 		So(testCLE, ShouldResemble, goldCLE)
 	})
-
 }
 
 func TestSemverTag(t *testing.T) {
@@ -219,7 +219,7 @@ func TestSemverTag(t *testing.T) {
 	tag := "1.0.0"
 
 	Convey("Semver tags should be parsed", t, func() {
-		hash := repo.modifyAndCommit("file", defCommitOptions())
+		hash := repo.modifyAndCommit(defCommitOptions())
 
 		if _, err := repo.Git.CreateTag(tag, hash, nil); err != nil {
 			t.Fatal(err)
@@ -235,7 +235,7 @@ func TestSemverTag(t *testing.T) {
 	})
 
 	Convey("Not Semver tags should be ignored", t, func() {
-		hash := repo.modifyAndCommit("file", defCommitOptions())
+		hash := repo.modifyAndCommit(defCommitOptions())
 
 		if _, err := repo.Git.CreateTag("text", hash, nil); err != nil {
 			t.Fatal(err)

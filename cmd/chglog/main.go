@@ -33,16 +33,16 @@ func main() {
 		"c",
 		cfgFile,
 		``)
-	config.BindPFlag("config-file", cmdRoot.PersistentFlags().Lookup("config-file"))
+	_ = config.BindPFlag("config-file", cmdRoot.PersistentFlags().Lookup("config-file"))
 
-	cmdRoot.PersistentPreRun = func(c *cobra.Command, args []string) {
+	cmdRoot.PersistentPreRunE = func(c *cobra.Command, args []string) error {
 		if cfgFile == config.GetString("config-file") {
-			return
+			return nil
 		}
 
 		config.SetConfigFile(cfgFile)
 		config.Set("config-file", cfgFile)
-		config.ReadInConfig()
+		return config.ReadInConfig()
 	}
 
 	cmds := commands.AllCommands(config)
