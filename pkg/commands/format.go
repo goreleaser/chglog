@@ -16,7 +16,7 @@ import (
 var ErrTemplateFlags = errors.New("--template and --template-file are mutually exclusive")
 
 // nolint: funlen, gocritic
-func setupFormatCmd(config *viper.Viper) (cmd *cobra.Command) {
+func FormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 	var input,
 		output,
 		pkg,

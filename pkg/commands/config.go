@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func setupConfigCmd(config *viper.Viper) (cmd *cobra.Command) {
+func ConfigCmd(config *viper.Viper) (cmd *cobra.Command) {
 	var pkg string
 	cmd = &cobra.Command{
 		Use:   "config",

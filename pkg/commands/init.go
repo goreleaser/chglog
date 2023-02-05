@@ -15,7 +15,7 @@ import (
 // ErrNoTags happens when a repository has no tags.
 var ErrNoTags = errors.New("no versioned releases found, check the output of `git tag`")
 
-func setupInitCmd(config *viper.Viper) (cmd *cobra.Command) {
+func InitCmd(config *viper.Viper) (cmd *cobra.Command) {
 	var output string
 	cmd = &cobra.Command{
 		Use:   "init [PATH]",
@@ -30,10 +30,6 @@ func setupInitCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"o",
 		"changelog.yml",
 		"file to save the new changelog to")
-
-	cmd.PersistentPreRun = func(c *cobra.Command, args []string) {
-		cmd.Parent().PersistentPreRun(c, args)
-	}
 
 	cmd.RunE = func(c *cobra.Command, args []string) (err error) {
 		var (

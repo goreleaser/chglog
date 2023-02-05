@@ -45,8 +45,13 @@ func main() {
 		return config.ReadInConfig()
 	}
 
-	cmds := commands.AllCommands(config)
-	cmdRoot.AddCommand(cmds...)
+	cmdRoot.AddCommand(
+		commands.AddCmd(config),
+		commands.InitCmd(config),
+		commands.VersionCmd(config),
+		commands.ConfigCmd(config),
+		commands.FormatCmd(config),
+	)
 
 	if err := cmdRoot.Execute(); err != nil {
 		// nolint: gomnd, gocritic

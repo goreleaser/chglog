@@ -15,7 +15,7 @@ import (
 )
 
 // nolint: gocognit, funlen, gocritic
-func setupAddCmd(config *viper.Viper) (cmd *cobra.Command) {
+func AddCmd(config *viper.Viper) (cmd *cobra.Command) {
 	var (
 		input,
 		output,
