@@ -7,19 +7,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-// AllCommands returns all commands supported.
-func AllCommands(config *viper.Viper) (cmds []*cobra.Command) {
-	cmds = append(cmds,
-		setupVersionCmd(config),
-		setupConfigCmd(config),
-		setupAddCmd(config),
-		setupInitCmd(config),
-		setupFormatCmd(config),
-	)
-
-	return cmds
-}
-
 func commonFlags(cmd *cobra.Command, config *viper.Viper) (*cobra.Command, *viper.Viper) {
 	var (
 		urgency, owner      string
