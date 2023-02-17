@@ -61,9 +61,6 @@ func FormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 	cmd.PreRunE = func(cmd *cobra.Command, args []string) error {
 		return config.BindPFlag("package-name", cmd.Flags().Lookup("package-name"))
 	}
-	cmd.PersistentPreRun = func(c *cobra.Command, args []string) {
-		cmd.Parent().PersistentPreRun(c, args)
-	}
 
 	cmd.RunE = func(c *cobra.Command, args []string) (err error) {
 		var (
