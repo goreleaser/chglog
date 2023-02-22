@@ -75,10 +75,6 @@ func AddCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"",
 		"Footer note for this entry")
 
-	cmd.PersistentPreRun = func(c *cobra.Command, args []string) {
-		cmd.Parent().PersistentPreRun(c, args)
-	}
-
 	cmd.RunE = func(c *cobra.Command, args []string) (err error) {
 		var (
 			repoPath string
