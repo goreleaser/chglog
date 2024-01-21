@@ -83,7 +83,7 @@ func versionsOnBranch(gitRepo *git.Repository) (map[*semver.Version]plumbing.Has
 }
 
 // InitChangelog create a new ChangeLogEntries from a git repo.
-func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, useConventionalCommits bool) (cle ChangeLogEntries, err error) {
+func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes, deb *ChangelogDeb, useConventionalCommits bool, excludeMergeCommits bool) (cle ChangeLogEntries, err error) {
 	var start, end plumbing.Hash
 
 	cle = make(ChangeLogEntries, 0)
@@ -121,7 +121,7 @@ func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes,
 		if owner == "" {
 			owner = fmt.Sprintf("%s <%s>", commitObject.Committer.Name, commitObject.Committer.Email)
 		}
-		if commits, err = CommitsBetween(gitRepo, start, end); err != nil {
+		if commits, err = CommitsBetween(gitRepo, start, end, excludeMergeCommits); err != nil {
 			return nil, fmt.Errorf("unable to find commits between %s & %s: %w", end, start, err)
 		}
 

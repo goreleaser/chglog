@@ -133,7 +133,7 @@ func AddCmd(config *viper.Viper) (cmd *cobra.Command) {
 			return fmt.Errorf("error adding entry: %w", err)
 		}
 
-		if entries, err = chglog.AddEntry(gitRepo, semv, config.GetString("owner"), notes, getDeb(config), entries, config.GetBool("conventional-commits")); err != nil {
+		if entries, err = chglog.AddEntry(gitRepo, semv, config.GetString("owner"), notes, getDeb(config), entries, config.GetBool("conventional-commits"), config.GetBool("exclude-merge-commits")); err != nil {
 			return fmt.Errorf("error adding entry: %w", err)
 		}
 

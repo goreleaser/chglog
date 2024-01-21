@@ -113,7 +113,7 @@ func TestOrderChangelog(t *testing.T) {
 		}
 	}
 
-	testCLE, err := InitChangelog(repo.Git, "", nil, nil, false)
+	testCLE, err := InitChangelog(repo.Git, "", nil, nil, false, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -191,7 +191,7 @@ func TestOffBranchTags(t *testing.T) {
 		}
 	}
 
-	testCLE, err := InitChangelog(repo.Git, "", nil, nil, false)
+	testCLE, err := InitChangelog(repo.Git, "", nil, nil, false, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -225,7 +225,7 @@ func TestSemverTag(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		cle, err := InitChangelog(repo.Git, "", nil, nil, false)
+		cle, err := InitChangelog(repo.Git, "", nil, nil, false, false)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -241,7 +241,7 @@ func TestSemverTag(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		cle, err := InitChangelog(repo.Git, "", nil, nil, false)
+		cle, err := InitChangelog(repo.Git, "", nil, nil, false, false)
 		if err != nil {
 			t.Fatal(err)
 		}
