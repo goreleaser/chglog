@@ -13,7 +13,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/storage/memory"
-	. "github.com/smartystreets/goconvey/convey"
+	"github.com/smartystreets/goconvey/convey"
 )
 
 type testRepo struct {
@@ -118,8 +118,8 @@ func TestOrderChangelog(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	Convey("Generated entry should be the same as the golden entry", t, func() {
-		So(testCLE, ShouldResemble, goldCLE)
+	convey.Convey("Generated entry should be the same as the golden entry", t, func() {
+		convey.So(testCLE, convey.ShouldResemble, goldCLE)
 	})
 }
 
@@ -209,8 +209,8 @@ func TestOffBranchTags(t *testing.T) {
 		}
 	}
 
-	Convey("Generated entry should be the same as the golden entry", t, func() {
-		So(testCLE, ShouldResemble, goldCLE)
+	convey.Convey("Generated entry should be the same as the golden entry", t, func() {
+		convey.So(testCLE, convey.ShouldResemble, goldCLE)
 	})
 }
 
@@ -218,7 +218,7 @@ func TestSemverTag(t *testing.T) {
 	repo := newTestRepo()
 	tag := "1.0.0"
 
-	Convey("Semver tags should be parsed", t, func() {
+	convey.Convey("Semver tags should be parsed", t, func() {
 		hash := repo.modifyAndCommit(defCommitOptions())
 
 		if _, err := repo.Git.CreateTag(tag, hash, nil); err != nil {
@@ -230,11 +230,11 @@ func TestSemverTag(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		So(cle, ShouldHaveLength, 1)
-		So(cle[0].Semver, ShouldEqual, tag)
+		convey.So(cle, convey.ShouldHaveLength, 1)
+		convey.So(cle[0].Semver, convey.ShouldEqual, tag)
 	})
 
-	Convey("Not Semver tags should be ignored", t, func() {
+	convey.Convey("Not Semver tags should be ignored", t, func() {
 		hash := repo.modifyAndCommit(defCommitOptions())
 
 		if _, err := repo.Git.CreateTag("text", hash, nil); err != nil {
@@ -246,7 +246,7 @@ func TestSemverTag(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		So(cle, ShouldHaveLength, 1)
-		So(cle[0].Semver, ShouldEqual, tag)
+		convey.So(cle, convey.ShouldHaveLength, 1)
+		convey.So(cle[0].Semver, convey.ShouldEqual, tag)
 	})
 }

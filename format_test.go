@@ -42,19 +42,23 @@ func TestFormatChangelog(t *testing.T) {
 
 func accept(t *testing.T, tmplData string, pkg PackageChangeLog) {
 	t.Helper()
-	if tpl, err := LoadTemplateData(tmplData); err != nil {
+
+	tpl, err := LoadTemplateData(tmplData)
+	if err != nil {
 		t.Error(err)
 
 		return
-	} else if testdata, err := FormatChangelog(&pkg, tpl); err != nil {
+	}
+
+	testdata, err := FormatChangelog(&pkg, tpl)
+	if err != nil {
 		t.Error(err)
 
 		return
-	} else {
-		golddata, _ := os.ReadFile(fmt.Sprintf("./testdata/%s", pkg.Name))
+	}
 
-		if diff := cmp.Diff(string(golddata), testdata); diff != "" {
-			t.Errorf("FormatChangelog mismatch (+got -want):\n%s", diff)
-		}
+	golddata, _ := os.ReadFile(fmt.Sprintf("./testdata/%s", pkg.Name))
+	if diff := cmp.Diff(string(golddata), testdata); diff != "" {
+		t.Errorf("FormatChangelog mismatch (+got -want):\n%s", diff)
 	}
 }
