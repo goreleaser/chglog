@@ -50,6 +50,7 @@ The first steps are to run `chglog config` to initialize a configuration file
 
 ```yaml
 conventional-commits: false
+exclude-merge-commits: false
 deb:
   distribution: []
   urgency: ""

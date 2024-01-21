@@ -51,7 +51,7 @@ func InitCmd(config *viper.Viper) (cmd *cobra.Command) {
 			return fmt.Errorf("error initialzing change log: %w", err)
 		}
 
-		if entries, err = chglog.InitChangelog(gitRepo, config.GetString("owner"), nil, getDeb(config), config.GetBool("conventional-commits")); err != nil {
+		if entries, err = chglog.InitChangelog(gitRepo, config.GetString("owner"), nil, getDeb(config), config.GetBool("conventional-commits"), config.GetBool("exclude-merge-commits")); err != nil {
 			return fmt.Errorf("error initialzing change log: %w", err)
 		}
 

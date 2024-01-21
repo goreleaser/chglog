@@ -1,0 +1,98 @@
+- semver: 0.0.1
+  date: 2024-01-21T15:37:29+01:00
+  packager: Arne Jørgensen <arne@arnested.dk>
+  changes:
+    - commit: e6f123d7d0aa2025ce61d28e2d34f94f3a6b5218
+      note: Merge branch 'mergetest'
+      author:
+        name: Arne Jørgensen
+        email: arne@arnested.dk
+      committer:
+        name: Arne Jørgensen
+        email: arne@arnested.dk
+      conventional_commit:
+        category: chore
+        scope: ""
+        description: Merge branch 'mergetest'
+        body: ""
+        major: false
+        minor: false
+        patch: false
+    - commit: 25c55c716f1f18bb91aafa55f98a02315f59afe6
+      note: 'feat: add file to be merged in later'
+      author:
+        name: Arne Jørgensen
+        email: arne@arnested.dk
+      committer:
+        name: Arne Jørgensen
+        email: arne@arnested.dk
+      conventional_commit:
+        category: feat
+        scope: ""
+        description: add file to be merged in later
+        body: ""
+        major: false
+        minor: true
+        patch: false
+    - commit: 2c499787328348f09ae1e8f03757c6483b9a938a
+      note: |-
+        oops i forgot to use Conventional Commits style message
+
+        This should NOT break anything even if I am asking to build the changelog using Conventional Commits style message
+      author:
+        name: Dj Gilcrease
+        email: d.gilcrease@f5.com
+      committer:
+        name: Dj Gilcrease
+        email: d.gilcrease@f5.com
+      conventional_commit:
+        category: chore
+        scope: ""
+        description: oops i forgot to use Conventional Commits style message
+        body: This should NOT break anything even if I am asking to build the changelog using Conventional Commits style message
+        major: false
+        minor: false
+        patch: false
+    - commit: 3ec1e9a60d07cc060cee727c97ffc8aac5713943
+      note: |-
+        feat: added file two feature
+
+        BREAKING CHANGE: this is a backwards incompatible change
+      author:
+        name: Dj Gilcrease
+        email: d.gilcrease@f5.com
+      committer:
+        name: Dj Gilcrease
+        email: d.gilcrease@f5.com
+      conventional_commit:
+        category: feat
+        scope: ""
+        description: added file two feature
+        body: ""
+        footer:
+            - 'BREAKING CHANGE: this is a backwards incompatible change'
+        major: true
+        minor: false
+        patch: false
+    - commit: 2cc00abc77d401a541d18c26e5c7fbef1effd3ed
+      note: |-
+        feat: added the fileone feature
+
+        * This is a test repo
+        * so ya!
+      author:
+        name: Dj Gilcrease
+        email: d.gilcrease@f5.com
+      committer:
+        name: Dj Gilcrease
+        email: d.gilcrease@f5.com
+      conventional_commit:
+        category: feat
+        scope: ""
+        description: added the fileone feature
+        body: |-
+            * This is a test repo
+            * so ya!
+        major: false
+        minor: true
+        patch: false

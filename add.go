@@ -28,6 +28,7 @@ func AddEntry(
 	deb *ChangelogDeb,
 	current ChangeLogEntries,
 	useConventionalCommits bool,
+	excludeMergeCommits bool,
 ) (cle ChangeLogEntries, err error) {
 	var (
 		ref      *plumbing.Reference
@@ -48,7 +49,7 @@ func AddEntry(
 	}
 
 	cle = append(cle, current...)
-	if commits, err = CommitsBetween(gitRepo, from, to); err != nil {
+	if commits, err = CommitsBetween(gitRepo, from, to, excludeMergeCommits); err != nil {
 		return nil, fmt.Errorf("error adding entry: %w", err)
 	}
 

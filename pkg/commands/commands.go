@@ -12,6 +12,7 @@ func commonFlags(cmd *cobra.Command, config *viper.Viper) (*cobra.Command, *vipe
 		urgency, owner      string
 		distribution        []string
 		conventionalCommits bool
+		excludeMergeCommits bool
 	)
 	cmd.Flags().BoolVarP(
 		&conventionalCommits,
@@ -19,6 +20,12 @@ func commonFlags(cmd *cobra.Command, config *viper.Viper) (*cobra.Command, *vipe
 		"",
 		conventionalCommits,
 		`Use conventional commits parsing`)
+	cmd.Flags().BoolVarP(
+		&excludeMergeCommits,
+		"exclude-merge-commits",
+		"",
+		excludeMergeCommits,
+		`Exclude merge commits`)
 	cmd.Flags().StringVarP(
 		&owner,
 		"owner",
@@ -40,6 +47,9 @@ func commonFlags(cmd *cobra.Command, config *viper.Viper) (*cobra.Command, *vipe
 
 	cmd.PreRunE = func(c *cobra.Command, args []string) error {
 		if err := config.BindPFlag("conventional-commits", cmd.Flags().Lookup("conventional-commits")); err != nil {
+			return err
+		}
+		if err := config.BindPFlag("exclude-merge-commits", cmd.Flags().Lookup("exclude-merge-commits")); err != nil {
 			return err
 		}
 		if err := config.BindPFlag("owner", cmd.Flags().Lookup("owner")); err != nil {

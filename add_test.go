@@ -24,7 +24,7 @@ func TestAddEntry(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	testCLE, err = InitChangelog(gitRepo, "", nil, nil, true)
+	testCLE, err = InitChangelog(gitRepo, "", nil, nil, true, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -35,7 +35,7 @@ This is a test
 
 header entry
 `
-	testCLE, err = AddEntry(gitRepo, version, "Dj Gilcrease", createNote(header, ""), nil, testCLE, true)
+	testCLE, err = AddEntry(gitRepo, version, "Dj Gilcrease", createNote(header, ""), nil, testCLE, true, false)
 	if err != nil {
 		t.Fatal(err)
 	}

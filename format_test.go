@@ -24,7 +24,7 @@ func TestFormatChangelog(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	if testCLE, err = InitChangelog(gitRepo, "", nil, nil, true); err != nil {
+	if testCLE, err = InitChangelog(gitRepo, "", nil, nil, true, false); err != nil {
 		t.Error(err)
 
 		return
