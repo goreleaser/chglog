@@ -40,7 +40,7 @@ changelog formats not being the same.
 ## Install
 
 ```bash
-go get github.com/goreleaser/chglog/cmd/chglog@latest
+go install github.com/goreleaser/chglog/cmd/chglog@latest
 ```
 
 ## Usage
