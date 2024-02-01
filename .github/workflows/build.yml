@@ -41,7 +41,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
       - run: make ci
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.out
