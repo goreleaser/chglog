@@ -49,7 +49,6 @@ func versionsInRepo(gitRepo *git.Repository) (map[plumbing.Hash]*semver.Version,
 
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}
