@@ -31,7 +31,7 @@ func InitCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"changelog.yml",
 		"file to save the new changelog to")
 
-	cmd.RunE = func(c *cobra.Command, args []string) (err error) {
+	cmd.RunE = func(_ *cobra.Command, args []string) (err error) {
 		var (
 			repoPath string
 			gitRepo  *git.Repository

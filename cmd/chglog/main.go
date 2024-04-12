@@ -35,7 +35,7 @@ func main() {
 		``)
 	_ = config.BindPFlag("config-file", cmdRoot.PersistentFlags().Lookup("config-file"))
 
-	cmdRoot.PersistentPreRunE = func(c *cobra.Command, args []string) error {
+	cmdRoot.PersistentPreRunE = func(*cobra.Command, []string) error {
 		if cfgFile == config.GetString("config-file") {
 			return nil
 		}

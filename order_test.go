@@ -58,11 +58,11 @@ func (r *testRepo) modifyAndCommit(opts *git.CommitOptions) plumbing.Hash {
 	if file, err = r.Source.Filesystem.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o666); err != nil {
 		log.Fatal(err)
 	}
-	defer file.Close()
 
-	if _, err = file.Write([]byte(fmt.Sprintf("commit %d\n", r.seqno))); err != nil {
+	if _, err = fmt.Fprintf(file, "commit %d\n", r.seqno); err != nil {
 		log.Fatal(err)
 	}
+	_ = file.Close()
 
 	if _, err = r.Source.Add(filename); err != nil {
 		log.Fatal(err)

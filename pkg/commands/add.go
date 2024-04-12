@@ -75,7 +75,7 @@ func AddCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"",
 		"Footer note for this entry")
 
-	cmd.RunE = func(c *cobra.Command, args []string) (err error) {
+	cmd.RunE = func(_ *cobra.Command, args []string) (err error) {
 		var (
 			repoPath string
 			gitRepo  *git.Repository

@@ -1,5 +1,5 @@
 run:
-  go: "1.21"
+  go: "1.22"
   timeout: 5m
 linters:
   enable:
@@ -14,7 +14,13 @@ linters:
     - tagliatelle
     - misspell
     - depguard
+    - testifylint
+    - gocritic
 linters-settings:
+  staticcheck:
+    checks:
+      - all
+      - "-SA1019"
   forbidigo:
     forbid:
       - 'ioutil\.*'
@@ -30,3 +36,10 @@ linters-settings:
         deny:
           - pkg: "github.com/pkg/errors"
             desc: "use stdlib instead"
+  gocritic:
+    enabled-checks:
+      - exitAfterDefer
+  testifylint:
+    enable-all: true
+    disable:
+      - error-is-as # false positive

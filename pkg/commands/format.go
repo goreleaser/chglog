@@ -58,11 +58,11 @@ func FormatCmd(config *viper.Viper) (cmd *cobra.Command) {
 		"",
 		"custom template file to use")
 
-	cmd.PreRunE = func(cmd *cobra.Command, args []string) error {
+	cmd.PreRunE = func(cmd *cobra.Command, _ []string) error {
 		return config.BindPFlag("package-name", cmd.Flags().Lookup("package-name"))
 	}
 
-	cmd.RunE = func(c *cobra.Command, args []string) (err error) {
+	cmd.RunE = func(*cobra.Command, []string) (err error) {
 		var (
 			tpl        *template.Template
 			data       []byte

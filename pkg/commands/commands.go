@@ -45,7 +45,7 @@ func commonFlags(cmd *cobra.Command, config *viper.Viper) (*cobra.Command, *vipe
 		distribution,
 		`set debian distributions for`)
 
-	cmd.PreRunE = func(c *cobra.Command, args []string) error {
+	cmd.PreRunE = func(*cobra.Command, []string) error {
 		if err := config.BindPFlag("conventional-commits", cmd.Flags().Lookup("conventional-commits")); err != nil {
 			return err
 		}
