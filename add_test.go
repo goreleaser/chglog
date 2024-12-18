@@ -10,17 +10,27 @@ import (
 )
 
 func TestAddEntry(t *testing.T) {
+	t.Run("lightweight tag", func(t *testing.T) {
+		testAddEntry(t, "./testdata/add-repo", "./testdata/gold-add-changelog.yml")
+	})
+	t.Run("annotated tag", func(t *testing.T) {
+		testAddEntry(t, "./testdata/add-repo-annotated-tag", "./testdata/gold-add-changelog-with-annotated-commit.yml")
+	})
+}
+
+func testAddEntry(t *testing.T, repo, goldclePath string) {
+	t.Helper()
 	var (
 		err     error
 		gitRepo *git.Repository
 		testCLE ChangeLogEntries
 	)
-	goldcle, err := Parse("./testdata/gold-add-changelog.yml")
+	goldcle, err := Parse(goldclePath)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if gitRepo, err = GitRepo("./testdata/add-repo", false); err != nil {
+	if gitRepo, err = GitRepo(repo, false); err != nil {
 		log.Fatal(err)
 	}
 
