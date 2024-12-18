@@ -30,7 +30,19 @@ func GitHashFotTag(gitRepo *git.Repository, tagName string) (hash plumbing.Hash,
 		return plumbing.ZeroHash, fmt.Errorf("error getting commit for tag %s: %w", tagName, err)
 	}
 
-	return ref.Hash(), nil
+	// If the tag is annotated, we need to grab the actual commit hash.
+	obj, err := gitRepo.TagObject(ref.Hash())
+	if err != nil {
+		// Not an annotated tag
+		return ref.Hash(), nil
+	}
+
+	commit, err := obj.Commit()
+	if err != nil {
+		return plumbing.ZeroHash, fmt.Errorf("error getting commit for tag %s: %w", tagName, err)
+	}
+
+	return commit.Hash, nil
 }
 
 // CommitsBetween return the list of commits between two commits.
