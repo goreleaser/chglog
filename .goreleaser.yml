@@ -1,50 +1,52 @@
+version: 2
+
 before:
   hooks:
-  - go mod tidy
+    - go mod tidy
 
 gomod:
   proxy: true
 
 builds:
-- main: ./cmd/chglog
-  env:
-  - CGO_ENABLED=0
-  goos:
-  - linux
-  - darwin
-  - windows
-  goarch:
-  - amd64
-  - arm64
-  mod_timestamp: '{{ .CommitTimestamp }}'
-  flags:
-    - -trimpath
-  ldflags:
-    - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }} -X main.builtBy=goreleaser
+  - main: ./cmd/chglog
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }} -X main.builtBy=goreleaser
 
 changelog:
   sort: asc
   use: github
   filters:
     exclude:
-    - '^test:'
-    - '^chore'
-    - 'merge conflict'
-    - Merge pull request
-    - Merge remote-tracking branch
-    - Merge branch
-    - go mod tidy
+      - "^test:"
+      - "^chore"
+      - "merge conflict"
+      - Merge pull request
+      - Merge remote-tracking branch
+      - Merge branch
+      - go mod tidy
   groups:
     - title: Dependency updates
       regexp: "^.*feat\\(deps\\)*:+.*$"
       order: 300
-    - title: 'New Features'
+    - title: "New Features"
       regexp: "^.*feat[(\\w)]*:+.*$"
       order: 100
-    - title: 'Bug fixes'
+    - title: "Bug fixes"
       regexp: "^.*fix[(\\w)]*:+.*$"
       order: 200
-    - title: 'Documentation updates'
+    - title: "Documentation updates"
       regexp: "^.*docs[(\\w)]*:+.*$"
       order: 400
     - title: Other work
@@ -59,17 +61,17 @@ archives:
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
 brews:
-  - tap:
+  - repository:
       owner: goreleaser
       name: homebrew-tap
-    folder: Formula
-    homepage:  https://github.com/goreleaser/chglog
+    directory: Formula
+    homepage: https://github.com/goreleaser/chglog
     description: chglog is a changelog management library and tool
     test: |
       system "#{bin}/chglog version"
 nfpms:
-  - file_name_template: '{{ .ProjectName }}_{{ .Arch }}'
-    homepage:  https://github.com/goreleaser/chglog
+  - file_name_template: "{{ .ProjectName }}_{{ .Arch }}"
+    homepage: https://github.com/goreleaser/chglog
     description: chglog is a changelog management library and tool
     maintainer: Dj Gilcrease <d.gilcrease@f5.com>
     license: MIT
@@ -77,15 +79,14 @@ nfpms:
     formats:
       - deb
       - rpm
-scoop:
-  bucket:
-    owner: goreleaser
-    name: scoop-bucket
-  homepage:  https://goreleaser.com
-  folder: bucket
-  description: Deliver Go binaries as fast and easily as possible
-  license: MIT
-
+scoops:
+  - repository:
+      owner: goreleaser
+      name: scoop-bucket
+    homepage: https://goreleaser.com
+    directory: bucket
+    description: Deliver Go binaries as fast and easily as possible
+    license: MIT
 
 release:
   footer: |
