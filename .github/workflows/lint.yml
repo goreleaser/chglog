@@ -22,7 +22,7 @@ jobs:
         with:
           go-version: "stable"
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@2226d7cb06a077cd73e56eedd38eecad18e5d837
+        uses: golangci/golangci-lint-action@4696ba8babb6127d732c3c6dde519db15edab9ea
         with:
           skip-go-installation: true
           args: --timeout=5m
