@@ -59,7 +59,12 @@ func InitCmd(config *viper.Viper) (cmd *cobra.Command) {
 			return fmt.Errorf("%w: %s", ErrNoTags, repoPath)
 		}
 
-		return entries.Save(output)
+		if err := entries.Save(output); err != nil {
+			return err
+		}
+
+		fmt.Println("created:", output)
+		return nil
 	}
 
 	return cmd
