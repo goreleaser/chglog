@@ -91,6 +91,9 @@ func CreateEntry(date time.Time, version fmt.Stringer, owner string, notes *Chan
 		if useConventionalCommits {
 			cc = conventional_commit.ParseConventionalCommit(msg)
 		}
+		if changelog.Packager == "" {
+			changelog.Packager = fmt.Sprintf("%s <%s>", c.Author.Name, c.Author.Email)
+		}
 		changelog.Changes[idx] = &ChangeLogChange{
 			Commit: c.Hash.String(),
 			Note:   msg,
