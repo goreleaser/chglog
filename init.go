@@ -120,7 +120,7 @@ func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes,
 		if owner == "" {
 			owner = fmt.Sprintf("%s <%s>", commitObject.Author.Name, commitObject.Author.Email)
 		}
-		
+
 		if commits, err = CommitsBetween(gitRepo, start, end, excludeMergeCommits); err != nil {
 			return nil, fmt.Errorf("unable to find commits between %s & %s: %w", end, start, err)
 		}

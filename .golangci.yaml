@@ -25,9 +25,6 @@ linters:
     forbidigo:
       forbid:
         - pattern: ioutil\.*
-    gocritic:
-      enabled-checks:
-        - exitAfterDefer
     staticcheck:
       checks:
         - all
