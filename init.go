@@ -104,6 +104,7 @@ func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes,
 		var (
 			commits      []*object.Commit
 			commitObject *object.Commit
+			versionOwner = owner
 		)
 
 		if version.Prerelease() != "" {
@@ -117,15 +118,15 @@ func InitChangelog(gitRepo *git.Repository, owner string, notes *ChangeLogNotes,
 			return nil, fmt.Errorf("unable to fetch commit from tag %v: %w", version.Original(), err)
 		}
 
-		if owner == "" {
-			owner = fmt.Sprintf("%s <%s>", commitObject.Author.Name, commitObject.Author.Email)
+		if versionOwner == "" {
+			versionOwner = fmt.Sprintf("%s <%s>", commitObject.Author.Name, commitObject.Author.Email)
 		}
 
 		if commits, err = CommitsBetween(gitRepo, start, end, excludeMergeCommits); err != nil {
 			return nil, fmt.Errorf("unable to find commits between %s & %s: %w", end, start, err)
 		}
 
-		changelog := CreateEntry(commitObject.Committer.When, version, owner, notes, deb, commits, useConventionalCommits)
+		changelog := CreateEntry(commitObject.Committer.When, version, versionOwner, notes, deb, commits, useConventionalCommits)
 		cle = append(cle, changelog)
 		end = start
 	}
