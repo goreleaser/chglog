@@ -23,7 +23,7 @@ jobs:
           install-only: true
       - run: goreleaser build --snapshot --clean --snapshot
       - run: go test -v -failfast -race -coverpkg=./... -covermode=atomic -coverprofile=coverage.out ./... -timeout=5m
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.out
