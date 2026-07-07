@@ -106,10 +106,6 @@ Donations are very much appreciated! You can donate/sponsor on the main
 [goreleaser OpenCollective](https://opencollective.com/goreleaser)! It's
 easy and will surely help the developers at least buy some ☕️ or 🍺!
 
-## Stargazers over time
-
-[![goreleaser/chglog stargazers over time](https://starchart.cc/goreleaser/chglog.svg)](https://starchart.cc/goreleaser/chglog)
-
 ---
 
 Would you like to fix something in the documentation? Feel free to open an
