@@ -12,7 +12,7 @@ require (
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
 	gitlab.com/digitalxero/go-conventional-commit v1.0.7
-	go.yaml.in/yaml/v3 v3.0.4
+	go.yaml.in/yaml/v3 v3.0.5
 )
 
 require (
