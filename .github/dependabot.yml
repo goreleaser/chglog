@@ -5,6 +5,11 @@ updates:
     schedule:
       interval: "daily"
       time: "08:00"
+    groups:
+      go-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
     labels:
       - "dependencies"
     commit-message:

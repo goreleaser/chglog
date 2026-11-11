@@ -96,6 +96,32 @@ And that's it!
 
 You can look at the code of chglog itself to see how to use it as a library
 
+## Security updates and releases
+
+Dependabot checks Go modules daily and groups security fixes into a single PR.
+A repository administrator must enable **Dependabot alerts** and **Dependabot
+security updates** in the repository's security settings; the configuration file
+alone does not enable them. See [GitHub's setup instructions](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/configure-security-updates).
+
+Builds and `govulncheck` must pass before the existing Dependabot job requests
+auto-merge. Maintainers should also require the lint check in branch protection.
+Dependency merges do not publish a release. After a security update merges:
+
+1. Review the changes since the last release and confirm main's build, lint, and
+   vulnerability checks pass.
+2. Choose the next version (normally a patch release for security fixes) and push
+   its `v*` tag at the reviewed commit.
+3. The release workflow scans that tag again, then GoReleaser builds and publishes
+   the release using the existing `GH_PAT` secret.
+4. Download the published binary, inspect its Go version with `go version -m`, and
+   scan it with `govulncheck -mode=binary`.
+
+Use a current patched Go toolchain when building: standard-library fixes require
+rebuilding the binary, even when module dependencies have not changed. CI and
+releases use stable Go, and `go.mod` sets the minimum supported patch version.
+For local checks, install `golang.org/x/vuln/cmd/govulncheck@v1.9.0` and run
+`govulncheck ./...`.
+
 ## Status
 
 - alpha
