@@ -17,7 +17,7 @@ const (
 {{ end }}
 `
 	debTpl = `{{- $name := .Name}}{{- range .Entries }}{{ $name }} ({{ .Semver }}){{if .Deb}} {{default "" (.Deb.Distributions | join " ")}}; urgency={{default "low" .Deb.Urgency}}{{end}}
-  {{ range .Changes }}{{$note := splitList "\n" .Note}}
+{{ range .Changes }}{{$note := splitList "\n" .Note}}
   * {{ first $note }}
    {{- range $i,$n := (rest $note) }}
    {{- if ne (trim $n) ""}}
