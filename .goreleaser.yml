@@ -60,18 +60,15 @@ archives:
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-brews:
+homebrew_casks:
   - repository:
       owner: goreleaser
       name: homebrew-tap
       token: "{{ .Env.PUBLISHING_TOKEN }}"
     commit_author:
       use_github_app_token: true
-    directory: Formula
     homepage: https://github.com/goreleaser/chglog
     description: chglog is a changelog management library and tool
-    test: |
-      system "#{bin}/chglog version"
 nfpms:
   - file_name_template: "{{ .ProjectName }}_{{ .Arch }}"
     homepage: https://github.com/goreleaser/chglog
