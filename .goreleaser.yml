@@ -64,6 +64,9 @@ brews:
   - repository:
       owner: goreleaser
       name: homebrew-tap
+      token: "{{ .Env.PUBLISHING_TOKEN }}"
+    commit_author:
+      use_github_app_token: true
     directory: Formula
     homepage: https://github.com/goreleaser/chglog
     description: chglog is a changelog management library and tool
@@ -83,6 +86,9 @@ scoops:
   - repository:
       owner: goreleaser
       name: scoop-bucket
+      token: "{{ .Env.PUBLISHING_TOKEN }}"
+    commit_author:
+      use_github_app_token: true
     homepage: https://goreleaser.com
     directory: bucket
     description: Deliver Go binaries as fast and easily as possible
